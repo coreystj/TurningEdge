@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59B3DF82-90E5-4F50-B125-BA396BADE926}</ProjectGuid>
+    <ProjectGuid>{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TurningEdge.Networking</RootNamespace>
-    <AssemblyName>TurningEdge.Networking</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>TurningEdge.Networking.WindowsSocket</RootNamespace>
+    <AssemblyName>TurningEdge.Networking.WindowsSocket</AssemblyName>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,20 +35,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegates\NetworkInfoDelegates.cs" />
-    <Compile Include="Exceptions\NetworkInfoException.cs" />
-    <Compile Include="Factories\Abstracts\NetworkFactory.cs" />
-    <Compile Include="Models\Abstracts\NetworkInfo.cs" />
-    <Compile Include="Models\Concretes\Client.cs" />
-    <Compile Include="Models\Concretes\Server.cs" />
-    <Compile Include="Models\Concretes\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
-      <Name>TurningEdge</Name>
-    </ProjectReference>
+    <Folder Include="Models\Abstracts\" />
+    <Folder Include="Models\Concretes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

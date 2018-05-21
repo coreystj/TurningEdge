@@ -6,9 +6,21 @@ namespace TurningEdge.Generics.Factories
 {
     public class Factory<T> : IFactory<T>
     {
+        private object[] _initializers;
+
+        public Factory()
+        {
+            _initializers = new object[0];
+        }
+
+        public Factory(params object[] initializers)
+        {
+            _initializers = initializers;
+        }
+
         public T Create(Type type)
         {
-            return Create(type, new object[0]);
+            return Create(type, _initializers);
         }
 
         public T Create(Type type, params object[] args)
@@ -19,7 +31,7 @@ namespace TurningEdge.Generics.Factories
         public T Create<Y>()
             where Y : T
         {
-            return Create(typeof(Y));
+            return Create(typeof(Y), _initializers);
         }
 
         public T Create<Y>(params object[] args)

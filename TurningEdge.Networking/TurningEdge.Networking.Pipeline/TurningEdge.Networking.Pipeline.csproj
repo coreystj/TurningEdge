@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59B3DF82-90E5-4F50-B125-BA396BADE926}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{ACEC3388-378B-4926-BD01-0047E506ADB2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TurningEdge.Networking</RootNamespace>
-    <AssemblyName>TurningEdge.Networking</AssemblyName>
+    <RootNamespace>TurningEdge.Networking.Pipeline</RootNamespace>
+    <AssemblyName>TurningEdge.Networking.Pipeline</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,13 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegates\NetworkInfoDelegates.cs" />
-    <Compile Include="Exceptions\NetworkInfoException.cs" />
-    <Compile Include="Factories\Abstracts\NetworkFactory.cs" />
-    <Compile Include="Models\Abstracts\NetworkInfo.cs" />
-    <Compile Include="Models\Concretes\Client.cs" />
-    <Compile Include="Models\Concretes\Server.cs" />
-    <Compile Include="Models\Concretes\Session.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +46,13 @@
       <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.Networking\TurningEdge.Networking.csproj">
+      <Project>{59B3DF82-90E5-4F50-B125-BA396BADE926}</Project>
+      <Name>TurningEdge.Networking</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

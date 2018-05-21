@@ -5,6 +5,12 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking", "TurningEdge.Networking\TurningEdge.Networking.csproj", "{59B3DF82-90E5-4F50-B125-BA396BADE926}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.WindowsSocket", "TurningEdge.Networking.WindowsSocket\TurningEdge.Networking.WindowsSocket.csproj", "{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.Pipeline", "TurningEdge.Networking.Pipeline\TurningEdge.Networking.Pipeline.csproj", "{ACEC3388-378B-4926-BD01-0047E506ADB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

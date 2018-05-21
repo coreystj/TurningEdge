@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling", "TurningEdge.Modeling\TurningEdge.Modeling.csproj", "{7E87F038-DE96-4E68-AB18-DCF6728F661F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Common", "TurningEdge.Modeling.Common\TurningEdge.Modeling.Common.csproj", "{21C803CD-E0FC-497E-8C50-A34BF4197413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Models", "TurningEdge.Modeling.Models\TurningEdge.Modeling.Models.csproj", "{5D993E34-966D-4EB1-90DC-E155A4CE5734}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Controllers", "TurningEdge.Modeling.Controllers\TurningEdge.Modeling.Controllers.csproj", "{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Pipeline", "TurningEdge.Modeling.Pipeline\TurningEdge.Modeling.Pipeline.csproj", "{4F3C52FF-9C41-4467-8E2B-14C61242431B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{568FA55F-8F1D-49A3-9A42-9A20D7CBF786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Math", "..\TurningEdge.Math\TurningEdge.Math.csproj", "{DADB40B4-0DC0-46CD-839C-94C08F53716F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E87F038-DE96-4E68-AB18-DCF6728F661F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E87F038-DE96-4E68-AB18-DCF6728F661F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E87F038-DE96-4E68-AB18-DCF6728F661F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E87F038-DE96-4E68-AB18-DCF6728F661F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21C803CD-E0FC-497E-8C50-A34BF4197413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21C803CD-E0FC-497E-8C50-A34BF4197413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21C803CD-E0FC-497E-8C50-A34BF4197413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21C803CD-E0FC-497E-8C50-A34BF4197413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D993E34-966D-4EB1-90DC-E155A4CE5734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D993E34-966D-4EB1-90DC-E155A4CE5734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D993E34-966D-4EB1-90DC-E155A4CE5734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D993E34-966D-4EB1-90DC-E155A4CE5734}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F3C52FF-9C41-4467-8E2B-14C61242431B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F3C52FF-9C41-4467-8E2B-14C61242431B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F3C52FF-9C41-4467-8E2B-14C61242431B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F3C52FF-9C41-4467-8E2B-14C61242431B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADB40B4-0DC0-46CD-839C-94C08F53716F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADB40B4-0DC0-46CD-839C-94C08F53716F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADB40B4-0DC0-46CD-839C-94C08F53716F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADB40B4-0DC0-46CD-839C-94C08F53716F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6869595-840E-4734-A4DC-9E125DC34DCC} = {568FA55F-8F1D-49A3-9A42-9A20D7CBF786}
+		{DADB40B4-0DC0-46CD-839C-94C08F53716F} = {568FA55F-8F1D-49A3-9A42-9A20D7CBF786}
+	EndGlobalSection
+EndGlobal

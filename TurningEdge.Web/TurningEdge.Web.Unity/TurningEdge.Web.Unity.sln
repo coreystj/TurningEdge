@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Unity.Common", "TurningEdge.Web.Unity.Common\TurningEdge.Web.Unity.Common.csproj", "{694294FB-D861-4DE1-8319-F1546600EC9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Unity.Models", "TurningEdge.Web.Unity.Models\TurningEdge.Web.Unity.Models.csproj", "{DBED0B14-BD4F-4761-B953-204F07E0D03B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Unity.Controllers", "TurningEdge.Web.Unity.Controllers\TurningEdge.Web.Unity.Controllers.csproj", "{051588F8-EF28-4A7B-9DAC-D9D6D281795F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{694294FB-D861-4DE1-8319-F1546600EC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694294FB-D861-4DE1-8319-F1546600EC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694294FB-D861-4DE1-8319-F1546600EC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694294FB-D861-4DE1-8319-F1546600EC9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBED0B14-BD4F-4761-B953-204F07E0D03B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBED0B14-BD4F-4761-B953-204F07E0D03B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBED0B14-BD4F-4761-B953-204F07E0D03B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBED0B14-BD4F-4761-B953-204F07E0D03B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{051588F8-EF28-4A7B-9DAC-D9D6D281795F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{051588F8-EF28-4A7B-9DAC-D9D6D281795F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{051588F8-EF28-4A7B-9DAC-D9D6D281795F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{051588F8-EF28-4A7B-9DAC-D9D6D281795F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

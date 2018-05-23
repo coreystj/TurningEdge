@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using TurningEdge.Networking.Exceptions;
 using TurningEdge.Networking.Models.Abstracts;
 
 namespace TurningEdge.Networking.Models.Concretes
@@ -14,24 +15,26 @@ namespace TurningEdge.Networking.Models.Concretes
         {
         }
 
-        public override void Start()
+        public override void Connect()
         {
-            IPAddress parsedIpAddress = IPAddress.Parse(_ipAddress);
-            IPEndPoint localEndPoint = new IPEndPoint(parsedIpAddress, _port);
+            DoTry(() => {
+                IPAddress parsedIpAddress = IPAddress.Parse(_ipAddress);
+                IPEndPoint localEndPoint = new IPEndPoint(parsedIpAddress, _port);
 
-            _currentSession.CurrentSocket.Bind(localEndPoint);
-            Listen();
-            FireOnStarted(_currentSession);
+                _currentSession.CurrentSocket.Bind(localEndPoint);
+                _currentSession.CurrentSocket.Listen(100);
+
+                Listen();
+            });
         }
 
         private void Listen()
         {
-            // Start an asynchronous socket to listen for connections.  
-            Console.WriteLine("Waiting for a connection...");
-            _currentSession.CurrentSocket.Listen(100);
-            _currentSession.CurrentSocket.BeginAccept(
+            DoTry(() => {
+                _currentSession.CurrentSocket.BeginAccept(
                 new AsyncCallback(AcceptCallback),
                 _currentSession);
+            });
         }
 
 
@@ -39,16 +42,17 @@ namespace TurningEdge.Networking.Models.Concretes
         {
             // Get the socket that handles the client request.  
             Session session = (Session)ar.AsyncState;
-            Socket clientSocket = session.CurrentSocket.EndAccept(ar);
+            DoTry(() => {
+                Socket clientSocket = session.CurrentSocket.EndAccept(ar);
 
-            // Create the state object.  
-            Session clientSession = new Session(clientSocket);
-            clientSocket.BeginReceive(clientSession.InBuffer, 0, Session.BUFFER_SIZE, 0,
-                new AsyncCallback(ReadCallback), clientSession);
+                // Create the state object.  
+                Session clientSession = new Session(clientSocket);
 
-            FireOnStarted(clientSession);
-
-            Listen();
+                clientSocket.BeginReceive(clientSession.InBuffer, 0, Session.BUFFER_SIZE, 0,
+                    new AsyncCallback(ReadCallback), clientSession);
+                FireOnConnected(clientSession);
+                Listen();
+            });
         }
     }
 }

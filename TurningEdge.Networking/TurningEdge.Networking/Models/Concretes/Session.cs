@@ -14,6 +14,17 @@ namespace TurningEdge.Networking.Models.Concretes
         protected Socket _currentSocket;
         protected IPEndPoint _localEndPoint;
 
+        protected string _ipAddress;
+        protected int _port;
+
+        public string Address
+        {
+            get
+            {
+                return _ipAddress + ":" + _port;
+            }
+        }
+
         public byte[] InBuffer
         {
             get
@@ -65,21 +76,26 @@ namespace TurningEdge.Networking.Models.Concretes
         {
             _currentSocket = currentSocket; 
             _localEndPoint = _currentSocket.LocalEndPoint as IPEndPoint;
+
+            _ipAddress = _localEndPoint.Address.ToString();
+            _port = _localEndPoint.Port;
         }
 
         public Session(string ipAddress, int port)
             : this()
         {
+            _ipAddress = ipAddress;
+            _port = port;
             IPAddress parsedIpAddress = IPAddress.Parse(ipAddress);
+            IPEndPoint _localEndPoint = new IPEndPoint(parsedIpAddress, port);
+
             _currentSocket = new Socket(parsedIpAddress.AddressFamily,
                     SocketType.Stream, ProtocolType.Tcp);
-
-            IPEndPoint _localEndPoint = new IPEndPoint(parsedIpAddress, port);
         }
 
         public override string ToString()
         {
-            return _localEndPoint.ToString();
+            return Address;
         }
     }
 }

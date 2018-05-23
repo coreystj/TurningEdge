@@ -10,17 +10,39 @@ namespace TurningEdge.Networking.Models.Abstracts
 {
     public abstract class NetworkInfo
     {
-        public event OnStartedAction OnStarted = delegate { };
-        public event OnStartedFailedAction OnStartedFailed = delegate { };
+        public event OnConnectedAction OnConnected = delegate { };
+        public event OnConnectionFailedAction OnConnectionFailed = delegate { };
+        public event OnDisconnectedAction OnDisconnected = delegate { };
         public event OnMessageSentSuccessAction OnMessageSentSuccess  = delegate { };
-        public event OnMessageSentFailedAction OnMessageSentFailed  = delegate { };
         public event OnMessageReceivedSuccessAction OnMessageReceivedSuccess = delegate { };
-        public event OnMessageReceivedFailedAction OnMessageReceivedFailed  = delegate { };
+        public event OnErrorAction OnError = delegate { };
         public event OnStoppedAction OnStopped  = delegate { };
 
         protected Session _currentSession;
         protected string _ipAddress;
         protected int _port;
+
+        public bool IsConnected
+        {
+            get
+            {
+                if (_currentSession != null)
+                    if(_currentSession.CurrentSocket != null)
+                        return _currentSession.CurrentSocket.Connected;
+                    else
+                        return false;
+                else
+                    return false;
+            }
+        }
+
+        public string Address
+        {
+            get
+            {
+                return _ipAddress + ":" + _port;
+            }
+        }
 
         public Session CurrentSession
         {
@@ -32,98 +54,125 @@ namespace TurningEdge.Networking.Models.Abstracts
         {
             _ipAddress = ipAddress;
             _port = port;
-            _currentSession = new Session(_ipAddress, _port);
+            DoTry(() => {
+                _currentSession = new Session(_ipAddress, _port);
+            });
         }
 
-        public abstract void Start();
-        public void Send(byte[] bytes)
+        public abstract void Connect();
+        public void Send(Session session, byte[] bytes)
         {
-            // Begin sending the data to the remote device.  
-            _currentSession.CurrentSocket.BeginSend(bytes, 0, bytes.Length, 0,
-                new AsyncCallback(SendCallback), _currentSession);
+            DoTry(() => {
+                if (IsConnected)
+                {
+                    session.OutBuffer = bytes;
+                    // Begin sending the data to the remote device.  
+                    session.CurrentSocket.BeginSend(
+                        session.OutBuffer, 0, session.OutBuffer.Length, 0,
+                        new AsyncCallback(SendCallback), session);
+                }
+            });
         }
 
         public void ReadCallback(IAsyncResult ar)
         {
-            String content = String.Empty;
-
             // Retrieve the state object and the handler socket  
             // from the asynchronous state object.  
             Session session = (Session)ar.AsyncState;
-            Socket socket = session.CurrentSocket;
 
-            // Read data from the client socket.   
-            int bytesRead = socket.EndReceive(ar);
+            DoTry(() => {
+                // Read data from the client socket.   
+                int bytesRead = session.CurrentSocket.EndReceive(ar);
+                byte[] inBytes = new byte[bytesRead];
+                if (bytesRead > 0)
+                {
+                    Array.Copy(session.InBuffer, inBytes, 0);
 
-            if (bytesRead > 0)
-            {
-                // Not all data received. Get more.  
-                session.CurrentSocket.BeginReceive(session.InBuffer, 0, Session.BUFFER_SIZE, 0,
-                new AsyncCallback(ReadCallback), session);
+                    //TODO check inBytes for packets.
+                    FireOnMessageReceivedSuccess(session, inBytes);
 
-                FireOnMessageReceivedSuccess(_currentSession);
-                Send(_currentSession.InBuffer);
-            }
+                    // Not all data received. Get more.  
+                    session.CurrentSocket.BeginReceive(
+                        session.InBuffer, 0, Session.BUFFER_SIZE, 0,
+                        new AsyncCallback(ReadCallback), session);
+                }
+            });
         }
 
         protected void SendCallback(IAsyncResult ar)
         {
             // Retrieve the socket from the state object.  
             Session session = (Session)ar.AsyncState;
-            try
-            {
+            DoTry(() => {
                 // Complete sending the data to the remote device.  
                 int bytesSent = session.CurrentSocket.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
                 FireOnMessageSentSuccess(session);
-            }
-            catch (Exception e)
+            });
+        }
+
+        public void FireOnConnected(Session session)
+        {
+            DoTry(() =>
             {
-                FireOnMessageSentFailed(
-                    new NetworkInfoException(
-                        "Could not send to local end poin: " + session, e));
-            }
+                OnConnected(session);
+            });
         }
 
-        public void FireOnStarted(Session session)
+        public void FireOnError(NetworkInfoException exception)
         {
-            OnStarted(session);
+            DoTry(() =>
+            {
+                OnError(exception);
+            });
         }
 
-        public void FireOnStartedFailed(NetworkInfoException exception)
+        public void FireOnConnectionFailed(
+            string address, NetworkInfoException exception)
         {
-            OnStartedFailed(exception);
+            DoTry(() =>
+            {
+                OnConnectionFailed(address, exception);
+            });
         }
 
         public void FireOnMessageSentSuccess(Session session)
         {
-            OnMessageSentSuccess(session);
+            DoTry(() =>
+            {
+                OnMessageSentSuccess(session);
+            });
         }
 
-        public void FireOnMessageSentFailed(NetworkInfoException exception)
+        public void FireOnMessageReceivedSuccess(Session session, byte[] bytes)
         {
-            OnMessageSentFailed(exception);
-        }
-
-        public void FireOnMessageReceivedSuccess(Session session)
-        {
-            OnMessageReceivedSuccess(session);
-        }
-
-        public void FireOnMessageReceivedFailed(NetworkInfoException exception)
-        {
-            OnMessageReceivedFailed(exception);
+            DoTry(() =>
+            {
+                OnMessageReceivedSuccess(session, bytes);
+            });
         }
 
         public void FireOnStopped(Session session)
         {
-            OnStopped(session);
+            DoTry(() =>
+            {
+                OnStopped(session);
+            });
+        }
+
+        public void FireOnDisconnected(Session session)
+        {
+            DoTry(() =>
+            {
+                OnDisconnected(session);
+            });
         }
 
         public void Stop()
         {
-            _currentSession.CurrentSocket.Shutdown(SocketShutdown.Both);
-            _currentSession.CurrentSocket.Close();
+            DoTry(() => {
+                _currentSession.CurrentSocket.Shutdown(SocketShutdown.Both);
+                _currentSession.CurrentSocket.Close();
+            });
             FireOnStopped(_currentSession);
         }
 
@@ -132,5 +181,36 @@ namespace TurningEdge.Networking.Models.Abstracts
             return _currentSession.ToString();
         }
 
+        public void DoTry(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (SocketException sERef)
+            {
+                if (sERef.ErrorCode == 10054)
+                    FireOnDisconnected(_currentSession);
+                else if (sERef.ErrorCode == 10061)
+                    FireOnConnectionFailed(Address, new NetworkInfoException(
+                            "Failed to connect to local end point: " + _currentSession
+                            + " ErrorCode: " + sERef.ErrorCode, sERef));
+                else if (sERef.ErrorCode == 10048)
+                    FireOnConnectionFailed(Address, new NetworkInfoException(
+                            "Only one server can be hosted on this socket at a time: " + Address
+                            + " ErrorCode: " + sERef.ErrorCode, sERef));
+                else
+                    FireOnError(
+                        new NetworkInfoException(
+                            "An error has occurred: " + _currentSession 
+                            + " code: " + sERef.ErrorCode, sERef));
+            }
+            catch (Exception e)
+            {
+                FireOnError(
+                    new NetworkInfoException(
+                        "An error has occurred: " + _currentSession, e));
+            }
+        }
     }
 }

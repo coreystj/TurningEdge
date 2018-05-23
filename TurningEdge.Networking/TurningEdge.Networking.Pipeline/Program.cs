@@ -11,12 +11,11 @@ namespace TurningEdge.Networking.Pipeline
 {
     class Program
     {
-            private static ManualResetEvent tcpSessionWaitHandler = new ManualResetEvent(false);
-
+        private static ManualResetEvent _tcpSessionWaitHandler = new ManualResetEvent(false);
+        private static NetworkInfo _networker;
         static void Main(string[] args)
         {
             // Declare all variables.
-            NetworkInfo networker;
             Type networkerType;
             string ipAddress = "127.0.0.1";
             int port = 3456;
@@ -34,62 +33,75 @@ namespace TurningEdge.Networking.Pipeline
             var networkFactory = new NetworkFactory<NetworkInfo>(ipAddress, port);
 
             // Create networker.
-            networker = networkFactory.Create(networkerType);
+            _networker = networkFactory.Create(networkerType);
 
             // Bind the networker to the current process.
-            Bind(networker);
+            Bind(_networker);
 
-            // Start the networker.
-            networker.Start();
+            // Connect the networker.
+            _networker.Connect();
 
-            tcpSessionWaitHandler.WaitOne();
+            _tcpSessionWaitHandler.WaitOne();
         }
 
         private static void Bind(NetworkInfo networker)
         {
-            networker.OnStarted += Networker_OnStarted;
-            networker.OnStartedFailed += Networker_OnStartedFailed;
+            networker.OnConnected += Networker_OnConnected;
+            networker.OnDisconnected += Networker_OnDisconnected; ;
+            networker.OnError += Networker_OnError;
+            networker.OnConnectionFailed += Networker_OnConnectionFailed;
             networker.OnMessageSentSuccess += Networker_OnMessageSentSuccess;
-            networker.OnMessageSentFailed += Networker_OnMessageSentFailed;
             networker.OnMessageReceivedSuccess += Networker_OnMessageReceivedSuccess;
-            networker.OnMessageReceivedFailed += Networker_OnMessageReceivedFailed;
             networker.OnStopped += Networker_OnStopped;
     }
 
+        private static void Networker_OnDisconnected(Session session)
+        {
+            Console.WriteLine("Disconnected: " + session);
+        }
+
         private static void Networker_OnStopped(Session session)
         {
-            tcpSessionWaitHandler.Set();
+            _tcpSessionWaitHandler.Set();
             Console.WriteLine("Networker_OnStopped");
         }
 
-        private static void Networker_OnMessageReceivedFailed(NetworkInfoException exception)
+        private static void Networker_OnMessageReceivedSuccess(Session session, byte[] bytes)
         {
-            Console.WriteLine(exception.ToString());
-        }
-
-        private static void Networker_OnMessageReceivedSuccess(Session session)
-        {
-            Console.WriteLine("Networker_OnMessageReceivedSuccess");
-        }
-
-        private static void Networker_OnMessageSentFailed(NetworkInfoException exception)
-        {
-            Console.WriteLine(exception.ToString());
+            Console.WriteLine("Received: " + bytes.Length + " byte(s).");
+            if (_networker is Client)
+                ClientSend();
+            else
+                _networker.Send(session, bytes);
         }
 
         private static void Networker_OnMessageSentSuccess(Session session)
         {
             Console.WriteLine("Networker_OnMessageSentSuccess");
+
         }
 
-        private static void Networker_OnStartedFailed(Exceptions.NetworkInfoException exception)
+        private static void Networker_OnError(NetworkInfoException exception)
         {
             Console.WriteLine(exception.ToString());
         }
 
-        private static void Networker_OnStarted(Session session)
+        private static void Networker_OnConnectionFailed(string address, NetworkInfoException exception)
         {
-            Console.WriteLine("Networker_OnStarted");
+            Console.WriteLine("Failed to connect to: " + address);
+        }
+
+        private static void Networker_OnConnected(Session session)
+        {
+            Console.WriteLine("Networker_OnConnected: " + session);
+            if (_networker is Client)
+                ClientSend();
+        }
+
+        private static void ClientSend()
+        {
+            Console.Write("Send: ");
+            ((Client)_networker).Send(Encoding.ASCII.GetBytes(Console.ReadLine()));
         }
     }
 }

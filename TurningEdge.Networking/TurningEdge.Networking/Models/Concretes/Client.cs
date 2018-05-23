@@ -16,39 +16,36 @@ namespace TurningEdge.Networking.Models.Concretes
         {
         }
 
-        public override void Start()
+        public override void Connect()
         {
-            IPAddress parsedIpAddress = IPAddress.Parse(_ipAddress);
+            DoTry(() => {
+                IPAddress parsedIpAddress = IPAddress.Parse(_ipAddress);
+                IPEndPoint localEndPoint = new IPEndPoint(parsedIpAddress, _port);
 
-            IPEndPoint localEndPoint = new IPEndPoint(parsedIpAddress, _port);
-
-            // Connect to the remote endpoint.  
-            _currentSession.CurrentSocket.BeginConnect(localEndPoint,
-                new AsyncCallback(ConnectCallback), _currentSession);
+                // Connect to the remote endpoint.  
+                _currentSession.CurrentSocket.BeginConnect(localEndPoint,
+                    new AsyncCallback(ConnectCallback), _currentSession);
+            });
         }
 
         private void ConnectCallback(IAsyncResult ar)
         {
             // Retrieve the socket from the state object.  
-            Session client = (Session)ar.AsyncState;
-            try
-            {
-
+            Session session = (Session)ar.AsyncState;
+            DoTry(() => {
                 // Complete the connection.  
-                client.CurrentSocket.EndConnect(ar);
+                session.CurrentSocket.EndConnect(ar);
 
-                Console.WriteLine("Socket connected to {0}",
-                    client.CurrentSocket.RemoteEndPoint.ToString());
-                FireOnStarted(client);
-            }
-            catch (Exception e)
-            {
-                FireOnStartedFailed(
-                    new NetworkInfoException(
-                        "Could not connect to the local end point: " + client, e));
-            }
+                session.CurrentSocket.BeginReceive(session.InBuffer, 0, Session.BUFFER_SIZE, 0,
+                    new AsyncCallback(ReadCallback), session);
 
-            Send(new byte[] { 9, 1, 5 });
+                FireOnConnected(session);
+            });
+        }
+
+        public void Send(byte[] bytes)
+        {
+            Send(_currentSession, bytes);
         }
     }
 }

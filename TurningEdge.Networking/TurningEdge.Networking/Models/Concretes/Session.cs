@@ -4,11 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using TurningEdge.Networking.Helpers;
 
 namespace TurningEdge.Networking.Models.Concretes
 {
     public class Session
     {
+        // Size of receive buffer.  
+        public const int BUFFER_SIZE = 10;
+
         protected byte[] _inBuffer;
         protected byte[] _outBuffer;
         protected Socket _currentSocket;
@@ -16,6 +20,17 @@ namespace TurningEdge.Networking.Models.Concretes
 
         protected string _ipAddress;
         protected int _port;
+
+        protected List<Packet> _inComingPackets;
+        protected List<Packet> _outGoingPackets;
+
+        public List<Packet> OutGoingPackets
+        {
+            get
+            {
+                return _outGoingPackets;
+            }
+        }
 
         public string Address
         {
@@ -62,13 +77,14 @@ namespace TurningEdge.Networking.Models.Concretes
             }
         }
 
-        // Size of receive buffer.  
-        public const int BUFFER_SIZE = 1024;
+
 
         public Session()
         {
             _inBuffer = new byte[BUFFER_SIZE];
             _outBuffer = new byte[BUFFER_SIZE];
+            _inComingPackets = new List<Packet>();
+            _outGoingPackets = new List<Packet>();
         }
 
         public Session(Socket currentSocket)
@@ -87,10 +103,40 @@ namespace TurningEdge.Networking.Models.Concretes
             _ipAddress = ipAddress;
             _port = port;
             IPAddress parsedIpAddress = IPAddress.Parse(ipAddress);
-            IPEndPoint _localEndPoint = new IPEndPoint(parsedIpAddress, port);
+            _localEndPoint = new IPEndPoint(parsedIpAddress, port);
 
             _currentSocket = new Socket(parsedIpAddress.AddressFamily,
                     SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        public byte[] Append(Packet packet)
+        {
+            _inComingPackets.Add(packet);
+
+            if(packet.Type == DataTypes.PacketType.Last)
+            {
+                byte[] allBytes = PacketHelper.ToBytes(_inComingPackets);
+                _inComingPackets.Clear();
+                return allBytes;
+            }
+
+            return null;
+        }
+
+        public Packet PopPacket()
+        {
+            if (_outGoingPackets.Count > 0)
+            {
+                Packet packet = _outGoingPackets[0];
+                _outGoingPackets.RemoveAt(0);
+                return packet;
+            }
+            return null;
+        }
+
+        public void SetOutGoingPackets(List<Packet> packets)
+        {
+            _outGoingPackets = packets;
         }
 
         public override string ToString()

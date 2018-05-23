@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using TurningEdge.Networking.Delegates;
 using TurningEdge.Networking.Exceptions;
+using TurningEdge.Networking.Helpers;
 using TurningEdge.Networking.Models.Concretes;
 
 namespace TurningEdge.Networking.Models.Abstracts
@@ -65,7 +66,31 @@ namespace TurningEdge.Networking.Models.Abstracts
             DoTry(() => {
                 if (IsConnected)
                 {
-                    session.OutBuffer = bytes;
+                    List<Packet> packets = bytes.ToPackets();
+
+                    Send(session, packets);
+                }
+            });
+        }
+
+        public void Send(Session session, List<Packet> packets)
+        {
+            DoTry(() => {
+                if (IsConnected)
+                {
+                    session.SetOutGoingPackets(packets);
+                    Send(session, session.PopPacket());
+                }
+            });
+        }
+
+        public void Send(Session session, Packet packet)
+        {
+            DoTry(() => {
+                if (IsConnected)
+                {
+                    session.OutBuffer = packet.ToBytes();
+
                     // Begin sending the data to the remote device.  
                     session.CurrentSocket.BeginSend(
                         session.OutBuffer, 0, session.OutBuffer.Length, 0,
@@ -86,15 +111,32 @@ namespace TurningEdge.Networking.Models.Abstracts
                 byte[] inBytes = new byte[bytesRead];
                 if (bytesRead > 0)
                 {
-                    Array.Copy(session.InBuffer, inBytes, 0);
-
-                    //TODO check inBytes for packets.
-                    FireOnMessageReceivedSuccess(session, inBytes);
+                    Array.Copy(session.InBuffer, 0, inBytes, 0, bytesRead);
+                    Packet packet = inBytes.ToPacket();
 
                     // Not all data received. Get more.  
                     session.CurrentSocket.BeginReceive(
                         session.InBuffer, 0, Session.BUFFER_SIZE, 0,
                         new AsyncCallback(ReadCallback), session);
+
+                    if (packet.Type != DataTypes.PacketType.None)
+                    {
+                        byte[] bytes = _currentSession.Append(packet);
+
+                        if (bytes != null)
+                        {
+                            FireOnMessageReceivedSuccess(session, bytes);
+                        }
+                        else
+                            Send(session, new Packet(
+                            DataTypes.PacketType.None, new byte[] { 0 }).ToBytes());
+                    }
+                    else
+                    {
+                        Send(session, session.PopPacket());
+                    }
+
+
                 }
             });
         }

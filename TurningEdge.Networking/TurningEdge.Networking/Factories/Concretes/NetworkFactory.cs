@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using TurningEdge.Generics.Factories;
+using TurningEdge.Networking.DataTypes;
 using TurningEdge.Networking.Models.Abstracts;
+using TurningEdge.Networking.Models.Concretes;
 
 namespace TurningEdge.Networking.Factories.Abstracts
 {
@@ -13,6 +15,11 @@ namespace TurningEdge.Networking.Factories.Abstracts
             : base(initializers)
         {
 
+        }
+
+        public static Packet CreatePacket(PacketType type, byte[] bytes)
+        {
+            return new Packet(type, bytes);
         }
     }
 }

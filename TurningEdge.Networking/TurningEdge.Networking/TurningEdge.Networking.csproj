@@ -36,11 +36,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\PacketType.cs" />
     <Compile Include="Delegates\NetworkInfoDelegates.cs" />
     <Compile Include="Exceptions\NetworkInfoException.cs" />
-    <Compile Include="Factories\Abstracts\NetworkFactory.cs" />
+    <Compile Include="Factories\Concretes\NetworkFactory.cs" />
+    <Compile Include="Helpers\PacketHelper.cs" />
     <Compile Include="Models\Abstracts\NetworkInfo.cs" />
     <Compile Include="Models\Concretes\Client.cs" />
+    <Compile Include="Models\Concretes\Packet.cs" />
     <Compile Include="Models\Concretes\Server.cs" />
     <Compile Include="Models\Concretes\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

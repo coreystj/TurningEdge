@@ -76,11 +76,11 @@ namespace TurningEdge.Networking.Helpers
         public static byte[] ToBytes(this List<Packet> packets)
         {
             int i = 0;
-            byte[] allBytes = new byte[(packets.Count - 1) * Session.BUFFER_SIZE 
+            byte[] allBytes = new byte[(packets.Count - 1) * (Session.BUFFER_SIZE - 1) 
                 + packets[packets.Count - 1].Bytes.Length];
             foreach (var packet in packets)
             {
-                Array.Copy(packet.Bytes, 0, allBytes, i * Session.BUFFER_SIZE, packet.Bytes.Length);
+                Array.Copy(packet.Bytes, 0, allBytes, i * (Session.BUFFER_SIZE - 1), packet.Bytes.Length);
 
                 i++;
             }

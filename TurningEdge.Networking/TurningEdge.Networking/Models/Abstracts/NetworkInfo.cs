@@ -64,38 +64,32 @@ namespace TurningEdge.Networking.Models.Abstracts
         public void Send(Session session, byte[] bytes)
         {
             DoTry(() => {
-                if (IsConnected)
-                {
-                    List<Packet> packets = bytes.ToPackets();
+                List<Packet> packets = bytes.ToPackets();
 
-                    Send(session, packets);
-                }
+                Send(session, packets);
             });
         }
 
         public void Send(Session session, List<Packet> packets)
         {
             DoTry(() => {
-                if (IsConnected)
-                {
-                    session.SetOutGoingPackets(packets);
-                    Send(session, session.PopPacket());
-                }
+                session.SetOutGoingPackets(packets);
+                Send(session, session.PopPacket());
             });
         }
 
         public void Send(Session session, Packet packet)
         {
             DoTry(() => {
-                if (IsConnected)
-                {
-                    session.OutBuffer = packet.ToBytes();
+                session.OutBuffer = packet.ToBytes();
 
-                    // Begin sending the data to the remote device.  
-                    session.CurrentSocket.BeginSend(
-                        session.OutBuffer, 0, session.OutBuffer.Length, 0,
-                        new AsyncCallback(SendCallback), session);
-                }
+                // Begin sending the data to the remote device.  
+                session.CurrentSocket.BeginSend(
+                    session.OutBuffer, 0, session.OutBuffer.Length, 0,
+                    new AsyncCallback(SendCallback), session);
+
+                if (packet.Type == DataTypes.PacketType.Last)
+                    FireOnMessageSentSuccess(session);
             });
         }
 
@@ -129,7 +123,7 @@ namespace TurningEdge.Networking.Models.Abstracts
                         }
                         else
                             Send(session, new Packet(
-                            DataTypes.PacketType.None, new byte[] { 0 }).ToBytes());
+                            DataTypes.PacketType.None, new byte[] { 0 }));
                     }
                     else
                     {
@@ -148,7 +142,6 @@ namespace TurningEdge.Networking.Models.Abstracts
             DoTry(() => {
                 // Complete sending the data to the remote device.  
                 int bytesSent = session.CurrentSocket.EndSend(ar);
-                FireOnMessageSentSuccess(session);
             });
         }
 

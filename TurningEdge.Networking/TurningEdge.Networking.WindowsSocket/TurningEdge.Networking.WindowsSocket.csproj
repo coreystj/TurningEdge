@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TurningEdge.Networking.WindowsSocket</RootNamespace>
     <AssemblyName>TurningEdge.Networking.WindowsSocket</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,11 +36,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AddressHelper.cs" />
+    <Compile Include="Models\Concretes\SocketSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\Abstracts\" />
-    <Folder Include="Models\Concretes\" />
+    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
+      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
+      <Name>TurningEdge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.Networking\TurningEdge.Networking.csproj">
+      <Project>{59b3df82-90e5-4f50-b125-ba396bade926}</Project>
+      <Name>TurningEdge.Networking</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

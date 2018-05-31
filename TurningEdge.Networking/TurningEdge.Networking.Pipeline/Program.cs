@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using TurningEdge.Debugging;
 using TurningEdge.Networking.Exceptions;
 using TurningEdge.Networking.Factories.Abstracts;
 using TurningEdge.Networking.Models.Abstracts;
@@ -23,7 +24,8 @@ namespace TurningEdge.Networking.Pipeline
             char userInput;
 
             // request user input.
-            Console.Write("Type Server(S) or Client(C): ");
+            Debugger.Print("Type Server(S) or Client(C): ");
+            Debugger.PrintWarning("Hi baby girl this is just a simple warning message! I Love you! <3");
             userInput = Console.ReadLine().ToUpper()[0];
 
             // Store the network type.
@@ -57,18 +59,18 @@ namespace TurningEdge.Networking.Pipeline
 
         private static void Networker_OnDisconnected(Session session)
         {
-            Console.WriteLine("Disconnected: " + session);
+            Debugger.PrintWarning("Disconnected: " + session);
         }
 
         private static void Networker_OnStopped(Session session)
         {
             _tcpSessionWaitHandler.Set();
-            Console.WriteLine("Networker_OnStopped");
+            Debugger.PrintWarning("Networker_OnStopped");
         }
 
         private static void Networker_OnMessageReceivedSuccess(Session session, byte[] bytes)
         {
-            Console.WriteLine("Received: " + bytes.Length + " byte(s).");
+            Debugger.Print("Received: " + bytes.Length + " byte(s).");
             if (_networker is Client)
                 ClientSend();
             else
@@ -77,30 +79,30 @@ namespace TurningEdge.Networking.Pipeline
 
         private static void Networker_OnMessageSentSuccess(Session session)
         {
-            Console.WriteLine("Networker_OnMessageSentSuccess");
+            Debugger.Print("Networker_OnMessageSentSuccess");
 
         }
 
         private static void Networker_OnError(NetworkInfoException exception)
         {
-            Console.WriteLine(exception.ToString());
+            Debugger.PrintError(exception);
         }
 
         private static void Networker_OnConnectionFailed(string address, NetworkInfoException exception)
         {
-            Console.WriteLine("Failed to connect to: " + address);
+            Debugger.PrintError(exception);
         }
 
         private static void Networker_OnConnected(Session session)
         {
-            Console.WriteLine("Networker_OnConnected: " + session);
+            Debugger.Print("Networker_OnConnected: " + session);
             if (_networker is Client)
                 ClientSend();
         }
 
         private static void ClientSend()
         {
-            Console.Write("Send: ");
+            Debugger.Print("Send: ");
             ((Client)_networker).Send(Encoding.ASCII.GetBytes(Console.ReadLine()));
         }
     }

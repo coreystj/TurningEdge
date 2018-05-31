@@ -14,11 +14,10 @@ namespace TurningEdge.Networking.Pipeline
     class Program
     {
         private static ManualResetEvent _tcpSessionWaitHandler = new ManualResetEvent(false);
-        private static NetworkInfo<SocketSession> _networker;
+        private static NetworkInfo<LocalSession> _networker;
         static void Main(string[] args)
         {
             // Declare all variables.
-            Type networkerType;
             string hostname = "turningedge.ddns.net";
             int port = 3389;
             char userInput;
@@ -36,9 +35,9 @@ namespace TurningEdge.Networking.Pipeline
                 : hostname;
 
             if(userInput == 'S')
-                _networker = NetworkFactory.CreateServer<SocketSession>(ipAddress, port);
+                _networker = NetworkFactory.CreateServer<LocalSession>(ipAddress, port);
             else
-                _networker = NetworkFactory.CreateClient<SocketSession>(ipAddress, port);
+                _networker = NetworkFactory.CreateClient<LocalSession>(ipAddress, port);
 
             // Bind the networker to the current process.
             Bind(_networker);
@@ -50,7 +49,7 @@ namespace TurningEdge.Networking.Pipeline
             while(true)
             {
                 
-                if (_networker is Client<SocketSession> && _networker.IsConnected)
+                if (_networker is Client<LocalSession> && _networker.IsConnected)
                     ClientSend();
                 else
                     Thread.Sleep(1000);
@@ -59,7 +58,7 @@ namespace TurningEdge.Networking.Pipeline
             _tcpSessionWaitHandler.WaitOne();
         }
 
-        private static void Bind(NetworkInfo<SocketSession> networker)
+        private static void Bind(NetworkInfo<LocalSession> networker)
         {
             networker.OnListening += Networker_OnListening;
             networker.OnConnectionAttempt += Networker_OnConnectionAttempt;
@@ -96,7 +95,7 @@ namespace TurningEdge.Networking.Pipeline
         private static void Networker_OnMessageReceivedSuccess(Session session, byte[] bytes)
         {
             Console.WriteLine("Received: " + bytes.Length + " byte(s).");
-            if (_networker is Client<SocketSession>)
+            if (_networker is Client<LocalSession>)
                 ClientSend();
             else
                 _networker.Send(session, bytes);
@@ -126,7 +125,7 @@ namespace TurningEdge.Networking.Pipeline
         private static void ClientSend()
         {
             Console.Write("Send: ");
-            ((Client<SocketSession>)_networker).Send(Encoding.ASCII.GetBytes(Console.ReadLine()));
+            ((Client<LocalSession>)_networker).Send(Encoding.ASCII.GetBytes(Console.ReadLine()));
             //((Client<SocketSession>)_networker).Send(new byte[] { 1,3,5});
         }
     }

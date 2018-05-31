@@ -1,21 +1,24 @@
 ﻿using System;
 using TurningEdge.Networking.DataTypes;
+using TurningEdge.Networking.Models.Abstracts;
 using TurningEdge.Networking.Models.Concretes;
 
 namespace TurningEdge.Networking.Factories.Abstracts
 {
     public static class NetworkFactory
     {
-        public static Server<T> CreateServer<T>(string ipAddress, int port)
+        public static NetworkInfo<T> CreateServer<T>(string ipAddress, int port)
             where T : Session
         {
-            return Create<Server<T>>(ipAddress, port);
+            var networkInfo = Create<Server<T>>(ipAddress, port);
+            return networkInfo as NetworkInfo<T>;
         }
 
-        public static Client<T> CreateClient<T>(string ipAddress, int port)
+        public static NetworkInfo<T> CreateClient<T>(string ipAddress, int port)
             where T : Session
         {
-            return Create<Client<T>>(ipAddress, port);
+            var networkInfo = Create<Client<T>>(ipAddress, port);
+            return networkInfo as NetworkInfo<T>;
         }
 
         public static Packet CreatePacket(PacketType type, byte[] bytes)
@@ -23,10 +26,10 @@ namespace TurningEdge.Networking.Factories.Abstracts
             return new Packet(type, bytes);
         }
 
-        public static T CreateSession<T>(params object[] args)
+        public static Session CreateSession<T>(params object[] args)
             where T : Session
         {
-            return (T)Activator.CreateInstance(typeof(T), args);
+            return (Session)Activator.CreateInstance(typeof(T), args);
         }
 
         private static T Create<T>(params object[] args)

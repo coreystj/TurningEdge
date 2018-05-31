@@ -4,18 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ACEC3388-378B-4926-BD01-0047E506ADB2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{97502398-F242-4813-916F-00B21E04C7C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TurningEdge.Networking.Pipeline</RootNamespace>
-    <AssemblyName>TurningEdge.Networking.Pipeline</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>TurningEdge.Networking.LocalNetwork</RootNamespace>
+    <AssemblyName>TurningEdge.Networking.LocalNetwork</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,17 +21,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,7 +36,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Managers\LocalNetworkManager.cs" />
+    <Compile Include="Models\Concretes\LocalSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,21 +45,10 @@
       <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TurningEdge.Networking.LocalNetwork\TurningEdge.Networking.LocalNetwork.csproj">
-      <Project>{97502398-f242-4813-916f-00b21e04c7c2}</Project>
-      <Name>TurningEdge.Networking.LocalNetwork</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TurningEdge.Networking.WindowsSocket\TurningEdge.Networking.WindowsSocket.csproj">
-      <Project>{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}</Project>
-      <Name>TurningEdge.Networking.WindowsSocket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurningEdge.Networking\TurningEdge.Networking.csproj">
-      <Project>{59B3DF82-90E5-4F50-B125-BA396BADE926}</Project>
+      <Project>{59b3df82-90e5-4f50-b125-ba396bade926}</Project>
       <Name>TurningEdge.Networking</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

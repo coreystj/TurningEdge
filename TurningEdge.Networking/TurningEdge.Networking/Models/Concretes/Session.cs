@@ -1,28 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+using TurningEdge.Networking.Delegates;
+using TurningEdge.Networking.Exceptions;
 using TurningEdge.Networking.Helpers;
 
 namespace TurningEdge.Networking.Models.Concretes
 {
-    public class Session
+    public abstract class Session
     {
+        protected Queue<Packet> _messages;
+        public event OnListeningAction OnListening = delegate { };
+        public event OnConnectionAttemptAction OnConnectionAttempt = delegate { };
+        public event OnConnectedAction OnConnected = delegate { };
+        public event OnConnectionFailedAction OnConnectionFailed = delegate { };
+        public event OnMessageSendAttemptAction OnMessageSendAttempt = delegate { };
+        public event OnMessageSentSuccessAction OnMessageSentSuccess = delegate { };
+        public event OnMessageReceivedSuccessAction OnMessageReceivedSuccess = delegate { };
+        public event OnStoppedAction OnStopped = delegate { };
+        public event OnDisconnectedAction OnDisconnected = delegate { };
+        public event OnErrorAction OnError = delegate { };
+
         // Size of receive buffer.  
-        public const int BUFFER_SIZE = 10;
+        public const int BUFFER_SIZE = 2;
 
         protected byte[] _inBuffer;
         protected byte[] _outBuffer;
-        protected Socket _currentSocket;
-        protected IPEndPoint _localEndPoint;
 
         protected string _ipAddress;
         protected int _port;
 
         protected List<Packet> _inComingPackets;
         protected List<Packet> _outGoingPackets;
+
+        public abstract bool IsConnected
+        {
+            get;
+        }
 
         public List<Packet> OutGoingPackets
         {
@@ -63,38 +76,13 @@ namespace TurningEdge.Networking.Models.Concretes
             }
         }
 
-        public IPEndPoint LocalEndPoint
-        {
-            get { return _localEndPoint; }
-            set { _localEndPoint = value; }
-        }
-
-        public Socket CurrentSocket
-        {
-            get
-            {
-                return _currentSocket;
-            }
-        }
-
-
-
         public Session()
         {
+            _messages = new Queue<Packet>();
             _inBuffer = new byte[BUFFER_SIZE];
             _outBuffer = new byte[BUFFER_SIZE];
             _inComingPackets = new List<Packet>();
             _outGoingPackets = new List<Packet>();
-        }
-
-        public Session(Socket currentSocket)
-            :this()
-        {
-            _currentSocket = currentSocket; 
-            _localEndPoint = _currentSocket.LocalEndPoint as IPEndPoint;
-
-            _ipAddress = _localEndPoint.Address.ToString();
-            _port = _localEndPoint.Port;
         }
 
         public Session(string ipAddress, int port)
@@ -102,18 +90,13 @@ namespace TurningEdge.Networking.Models.Concretes
         {
             _ipAddress = ipAddress;
             _port = port;
-            IPAddress parsedIpAddress = IPAddress.Parse(ipAddress);
-            _localEndPoint = new IPEndPoint(parsedIpAddress, port);
-
-            _currentSocket = new Socket(parsedIpAddress.AddressFamily,
-                    SocketType.Stream, ProtocolType.Tcp);
         }
 
         public byte[] Append(Packet packet)
         {
             _inComingPackets.Add(packet);
 
-            if(packet.Type == DataTypes.PacketType.Last)
+            if (packet.Type == DataTypes.PacketType.Last)
             {
                 byte[] allBytes = PacketHelper.ToBytes(_inComingPackets);
                 _inComingPackets.Clear();
@@ -137,6 +120,79 @@ namespace TurningEdge.Networking.Models.Concretes
         public void SetOutGoingPackets(List<Packet> packets)
         {
             _outGoingPackets = packets;
+        }
+
+        protected abstract void ProcessSend(Packet packet);
+        public void Send(Packet packet)
+        {
+            _messages.Enqueue(packet);
+
+            if(_messages.Count == 1)
+                ProcessSend(_messages.Dequeue());
+        }
+
+        
+
+        public abstract void Stop();
+
+        public abstract void Bind(string address, int port);
+
+        public abstract void Listen();
+
+
+        public abstract void Connect(string address, int port);
+
+        protected abstract void DoTry(Action action);
+
+        public void FireOnListening(string address, int port)
+        {
+            OnListening(address, port);
+        }
+
+        public void FireOnConnectionAttempt(string address, int port)
+        {
+            OnConnectionAttempt(address, port);
+        }
+
+        public void FireOnConnected(Session session)
+        {
+            OnConnected(session);
+        }
+
+        public void FireOnError(NetworkInfoException exception)
+        {
+            OnError(exception);
+        }
+
+        public void FireOnConnectionFailed(
+            string address, NetworkInfoException exception)
+        {
+            OnConnectionFailed(address, exception);
+        }
+
+        public void FireOnMessageSentSuccess(Session session)
+        {
+            OnMessageSentSuccess(session);
+        }
+
+        public void FireOnMessageSendAttempt(Session session)
+        {
+            OnMessageSendAttempt(session);
+        }
+
+        public void FireOnMessageReceivedSuccess(Session session, byte[] bytes)
+        {
+            OnMessageReceivedSuccess(session, bytes);
+        }
+
+        public void FireOnStopped(Session session)
+        {
+            OnStopped(session);
+        }
+
+        public void FireOnDisconnected(Session session)
+        {
+            OnDisconnected(session);
         }
 
         public override string ToString()

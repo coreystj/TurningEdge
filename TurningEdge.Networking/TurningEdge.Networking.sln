@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking", "TurningEdge.Networking\TurningEdge.Networking.csproj", "{59B3DF82-90E5-4F50-B125-BA396BADE926}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.LocalNetwork", "TurningEdge.Networking.LocalNetwork\TurningEdge.Networking.LocalNetwork.csproj", "{97502398-F242-4813-916F-00B21E04C7C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.Unity", "TurningEdge.Networking.Unity\TurningEdge.Networking.Unity.csproj", "{81E83945-2623-41DC-B3CA-E3C10E55ED6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Unity", "..\TurningEdge.Unity\TurningEdge.Unity\TurningEdge.Unity.csproj", "{93AFE9D0-C0E2-41C3-AFBA-76A91D84ADA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +43,19 @@ Global
 		{97502398-F242-4813-916F-00B21E04C7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97502398-F242-4813-916F-00B21E04C7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97502398-F242-4813-916F-00B21E04C7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E83945-2623-41DC-B3CA-E3C10E55ED6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E83945-2623-41DC-B3CA-E3C10E55ED6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E83945-2623-41DC-B3CA-E3C10E55ED6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E83945-2623-41DC-B3CA-E3C10E55ED6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93AFE9D0-C0E2-41C3-AFBA-76A91D84ADA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93AFE9D0-C0E2-41C3-AFBA-76A91D84ADA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93AFE9D0-C0E2-41C3-AFBA-76A91D84ADA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93AFE9D0-C0E2-41C3-AFBA-76A91D84ADA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC32ABD7-8868-4538-91DB-BC648BAAE21C}
 	EndGlobalSection
 EndGlobal

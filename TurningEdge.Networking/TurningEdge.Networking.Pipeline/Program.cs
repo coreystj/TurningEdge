@@ -69,7 +69,7 @@ namespace TurningEdge.Networking.Pipeline
             networker.OnMessageSentSuccess += Networker_OnMessageSentSuccess;
             networker.OnMessageReceivedSuccess += Networker_OnMessageReceivedSuccess;
             networker.OnStopped += Networker_OnStopped;
-    }
+        }
 
         private static void Networker_OnListening(string address, int port)
         {

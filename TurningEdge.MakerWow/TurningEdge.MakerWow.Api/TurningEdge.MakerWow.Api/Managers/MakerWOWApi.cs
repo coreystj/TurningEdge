@@ -36,6 +36,7 @@ namespace TurningEdge.MakerWow.Api.Managers
             DoGetRequest(_baseUrl + "read&table=world_data&id=61",
             (IWebRequest result) => {
                 var apiResult = new ApiResult<WorldData>(result.Json);
+                var user = apiResult.CurrentUser;
                 onGetWorldDataSuccess(apiResult.Records);
             },
             (WebContextException error) => {

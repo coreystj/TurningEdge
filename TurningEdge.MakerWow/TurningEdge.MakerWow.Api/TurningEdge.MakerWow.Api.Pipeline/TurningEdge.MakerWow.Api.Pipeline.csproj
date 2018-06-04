@@ -45,11 +45,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj">
+    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj">
       <Project>{65853F8C-789F-4119-AB7F-6243B55FF8D0}</Project>
       <Name>TurningEdge.Web.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">
+    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">
       <Project>{99FF16F8-6F2E-4145-92AC-849CEA177E15}</Project>
       <Name>TurningEdge.Web</Name>
     </ProjectReference>

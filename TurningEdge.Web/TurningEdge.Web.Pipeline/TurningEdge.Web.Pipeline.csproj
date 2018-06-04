@@ -43,10 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
-      <Name>TurningEdge</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj">
       <Project>{65853f8c-789f-4119-ab7f-6243b55ff8d0}</Project>
       <Name>TurningEdge.Web.Windows</Name>

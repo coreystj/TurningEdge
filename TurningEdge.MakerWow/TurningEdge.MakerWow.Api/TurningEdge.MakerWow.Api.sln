@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.MakerWow.Api.Pi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.MakerWow.Api.Windows", "TurningEdge.MakerWow.Api.Windows\TurningEdge.MakerWow.Api.Windows.csproj", "{61D3ABEF-CF03-492B-8471-ED75D4EFD09A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Windows", "..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj", "{65853F8C-789F-4119-AB7F-6243B55FF8D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Windows", "..\..\TurningEdge.Web\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj", "{65853F8C-789F-4119-AB7F-6243B55FF8D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web", "..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj", "{99FF16F8-6F2E-4145-92AC-849CEA177E15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web", "..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj", "{99FF16F8-6F2E-4145-92AC-849CEA177E15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

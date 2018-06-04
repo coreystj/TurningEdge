@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web", "TurningEdge.Web\TurningEdge.Web.csproj", "{99FF16F8-6F2E-4145-92AC-849CEA177E15}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Windows", "TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj", "{65853F8C-789F-4119-AB7F-6243B55FF8D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Pipeline", "TurningEdge.Web.Pipeline\TurningEdge.Web.Pipeline.csproj", "{FD226BFF-18C8-4B5A-B2F7-30E1B7254DE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Unity", "TurningEdge.Web.Unity\TurningEdge.Web.Unity.csproj", "{6006CDA4-E3DB-4F85-925D-69647A70E280}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65853F8C-789F-4119-AB7F-6243B55FF8D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65853F8C-789F-4119-AB7F-6243B55FF8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65853F8C-789F-4119-AB7F-6243B55FF8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,8 +35,15 @@ Global
 		{6006CDA4-E3DB-4F85-925D-69647A70E280}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6006CDA4-E3DB-4F85-925D-69647A70E280}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6006CDA4-E3DB-4F85-925D-69647A70E280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6869595-840E-4734-A4DC-9E125DC34DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {932435AD-4619-4E76-800B-67121262CFC8}
 	EndGlobalSection
 EndGlobal

@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\RegistrationStatus.cs" />
     <Compile Include="Delegates\RequestDelegates.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Helpers\ApiExceptionHelper.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Repositories\WorldDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">
+    <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">
       <Project>{99FF16F8-6F2E-4145-92AC-849CEA177E15}</Project>
       <Name>TurningEdge.Web</Name>
     </ProjectReference>

@@ -24,11 +24,11 @@ namespace TurningEdge.MakerWow.Api.Helpers
             return records;
         }
 
-        public static T ParseSingle<T>(this object rawRecords)
+        public static T ParseSingle<T>(this object rawRecord)
             where T : JsonObject
         {
             var factory = new Factory<JsonObject>();
-            return factory.Create<T>(rawRecords) as T;
+            return factory.Create<T>(rawRecord) as T;
         }
     }
 }

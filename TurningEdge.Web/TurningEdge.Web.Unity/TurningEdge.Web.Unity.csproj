@@ -178,10 +178,6 @@
     <Compile Include="WebResult\Concretes\UnityWebRequest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
-      <Name>TurningEdge</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurningEdge.Web\TurningEdge.Web.csproj">
       <Project>{99ff16f8-6f2e-4145-92ac-849cea177e15}</Project>
       <Name>TurningEdge.Web</Name>

@@ -70,7 +70,7 @@ namespace TurningEdge.MakerWow.Api.Models
         {
             get
             {
-                return _json.Json["user"].ParseSingle<T>() as User;
+                return _json.Json["user"].ParseSingle<User>();
             }
         }
 

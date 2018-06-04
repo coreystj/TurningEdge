@@ -45,7 +45,7 @@
     <Compile Include="WebResult\Interfaces\IWebRequest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TurningEdge\TurningEdge.csproj">
+    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
       <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>

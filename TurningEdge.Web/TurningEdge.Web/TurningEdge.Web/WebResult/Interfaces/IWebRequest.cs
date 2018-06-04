@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TurningEdge.Web.Models;
 
 namespace TurningEdge.Web.WebResult.Interfaces
 {
@@ -15,6 +16,11 @@ namespace TurningEdge.Web.WebResult.Interfaces
         {
             get;
         }
-        
+
+        JsonResult Json
+        {
+            get;
+        }
+
     }
 }

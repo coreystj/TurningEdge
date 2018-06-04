@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TurningEdge.Web.Models;
 using TurningEdge.Web.WebResult.Interfaces;
 
 namespace TurningEdge.Web.Windows.WebResult.Concretes
@@ -23,6 +24,14 @@ namespace TurningEdge.Web.Windows.WebResult.Concretes
             get
             {
                 return _url;
+            }
+        }
+
+        public JsonResult Json
+        {
+            get
+            {
+                return new JsonResult(_rawData);
             }
         }
 

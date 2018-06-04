@@ -7,10 +7,7 @@ namespace TurningEdge.Web.WebContext.Interfaces
 {
     public interface IWebContext
     {
-        event OnWebRequestSuccessAction OnWebRequestSuccess;
-        event OnWebRequestFailedAction OnWebRequestFailed;
-
-        void Get(string url);
-        void Post(string url);
+        void Get(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null);
+        void Post(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null);
     }
 }

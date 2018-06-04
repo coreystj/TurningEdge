@@ -13,20 +13,24 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
 {
     public class WindowsWebContext : IWebContext
     {
-        public event OnWebRequestFailedAction OnWebRequestFailed = delegate { };
-        public event OnWebRequestSuccessAction OnWebRequestSuccess = delegate { };
 
-        public void Get(string url)
+        public void Get(string url, 
+            OnWebRequestSuccessAction successAction, 
+            OnWebRequestFailedAction failedAction)
         {
-            SendRequest(url);
+            SendRequest(url, successAction, failedAction);
         }
 
-        public void Post(string url)
+        public void Post(string url,
+            OnWebRequestSuccessAction successAction,
+            OnWebRequestFailedAction failedAction)
         {
-            SendRequest(url);
+            SendRequest(url, successAction, failedAction);
         }
 
-        private void SendRequest(string url)
+        private void SendRequest(string url,
+            OnWebRequestSuccessAction successAction,
+            OnWebRequestFailedAction failedAction)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             var response = (HttpWebResponse)request.GetResponse();
@@ -34,9 +38,9 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             var webRequestFactory = new Factory<IWebRequest>();
 
             string rawData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            var webRequest = webRequestFactory.Create<WindowsWebRequest>(url, rawData);
+            var webRequest = webRequestFactory.Create<WindowsWebRequest>(rawData, url);
 
-            OnWebRequestSuccess(webRequest);
+            successAction(webRequest);
          }
     }
 }

@@ -8,7 +8,7 @@ namespace TurningEdge.MakerWow.Models
     {
         public MakerWowEngine()
         {
-            TurningEdge.Web.Unity.Factories.Static.MonoWebContextFactory.Create();
+            
         }
     }
 }

@@ -38,13 +38,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\Construction.cs" />
+    <Compile Include="DataTypes\Landscape.cs" />
     <Compile Include="DataTypes\RegistrationStatus.cs" />
     <Compile Include="Delegates\RequestDelegates.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
+    <Compile Include="Factories\ChunkDataFactory.cs" />
     <Compile Include="Helpers\ApiExceptionHelper.cs" />
     <Compile Include="Helpers\RecordHelper.cs" />
-    <Compile Include="Helpers\UserHelper.cs" />
-    <Compile Include="Helpers\WorldDataHelper.cs" />
     <Compile Include="Managers\MakerWOWApi.cs" />
     <Compile Include="Models\Abstracts\JsonObject.cs" />
     <Compile Include="Models\ApiResult .cs" />

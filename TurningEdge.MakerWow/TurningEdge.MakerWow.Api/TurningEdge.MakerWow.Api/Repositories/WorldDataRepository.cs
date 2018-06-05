@@ -7,24 +7,24 @@ using TurningEdge.MakerWow.Api.Models.GameInstances;
 
 namespace TurningEdge.MakerWow.Api.Repositories
 {
-    public class WorldDataRepository : IRepository<WorldData>
+    public class WorldDataRepository : IRepository<ChunkData>
     {
-        public WorldData Create(WorldData model)
+        public ChunkData Create(ChunkData model)
         {
             throw new NotImplementedException();
         }
 
-        public WorldData Delete(WorldData model)
+        public ChunkData Delete(ChunkData model)
         {
             throw new NotImplementedException();
         }
 
-        public WorldData Read(WorldData model)
+        public ChunkData Read(ChunkData model)
         {
             throw new NotImplementedException();
         }
 
-        public WorldData Update(WorldData model)
+        public ChunkData Update(ChunkData model)
         {
             throw new NotImplementedException();
         }

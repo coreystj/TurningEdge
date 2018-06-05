@@ -14,8 +14,8 @@ namespace TurningEdge.MakerWow.Api.Helpers
         public static ApiException ToError(this object result)
         {
             var errorData = result as Dictionary<string, object>;
-
-            return null;
+            int id = (int)errorData["id"];
+            return new ApiException(id, (string)errorData["message"]);
         }
     }
 }

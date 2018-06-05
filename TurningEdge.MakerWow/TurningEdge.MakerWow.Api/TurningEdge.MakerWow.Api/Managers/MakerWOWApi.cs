@@ -29,31 +29,37 @@ namespace TurningEdge.MakerWow.Api.Managers
             _webContext = webContext;
         }
 
-        public static void GetWorldData(
-            OnGetWorldDataSuccessAction onGetWorldDataSuccess, 
-            OnGetWorldDataFailedAction onGetWorldDataFailed)
+        public static void GetChunkData(
+            OnGetChunkDataSuccessAction onGetWorldDataSuccess, 
+            OnGetChunkDataFailedAction onGetWorldDataFailed)
         {
-            DoGetRequest(_baseUrl + "read&table=world_data&id=61",
+            DoGetRequest(_baseUrl + "read&table=chunk_data&id=61",
             (IWebRequest result) => {
-                var apiResult = new ApiResult<WorldData>(result.Json);
+                var apiResult = new ApiResult<ChunkData>(result.Json);
                 var user = apiResult.CurrentUser;
+                var error = apiResult.Error;
                 onGetWorldDataSuccess(apiResult.Records);
             },
             (WebContextException error) => {
-                onGetWorldDataFailed(new ApiException("Could not retrieve world data.", error));
+                onGetWorldDataFailed(new ApiException(0, "Could not retrieve chunk data.", error));
             });
         }
 
-        public static void SetWorldData(
-            OnSetWorldDataSuccessAction onSetWorldDataSuccess,
-            OnSetWorldDataFailedAction onSetWorldDataFailed)
+        public static void SetChunkData(
+            ChunkData[] chunkDatas,
+            OnSetChunkDataSuccessAction onSetChunkDataSuccess,
+            OnSetChunkDataFailedAction onSetChunkDataFailed)
         {
-            DoPostRequest("https://www.google.ca/",
+            var formData = new Dictionary<string, string>();
+            formData.Add("records", JSON.JSONWriter.ToJson(chunkDatas));
+
+            DoPostRequest(formData,
+            _baseUrl + "read&table=chunk_data&id=61",
             (IWebRequest result) => {
-                onSetWorldDataSuccess();
+                onSetChunkDataSuccess();
             },
             (WebContextException error) => {
-                onSetWorldDataFailed(new ApiException("Could not set world data.", error));
+                onSetChunkDataFailed(new ApiException(0, "Could not set chunk data.", error));
             });
         }
 
@@ -77,7 +83,9 @@ namespace TurningEdge.MakerWow.Api.Managers
                 onFailedAction);
         }
 
-        private static void DoPostRequest(string url,
+        private static void DoPostRequest(
+            Dictionary<string, string> formData,
+            string url,
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
@@ -92,6 +100,7 @@ namespace TurningEdge.MakerWow.Api.Managers
             };
 
             _webContext.Post(
+                formData,
                 url,
                 onSuccessAction,
                 onFailedAction);

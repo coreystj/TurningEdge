@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -7,6 +8,7 @@ using TurningEdge.Generics.Factories;
 using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
+using TurningEdge.Web.Windows.Helpers;
 using TurningEdge.Web.Windows.WebResult.Concretes;
 
 namespace TurningEdge.Web.Windows.WebContext.Concretes
@@ -18,17 +20,18 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             OnWebRequestSuccessAction successAction, 
             OnWebRequestFailedAction failedAction)
         {
-            SendRequest(url, successAction, failedAction);
+            SendGetRequest(url, successAction, failedAction);
         }
 
-        public void Post(string url,
+        public void Post(Dictionary<string, string> formData, 
+            string url,
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
-            SendRequest(url, successAction, failedAction);
+            SendPostRequest(formData, url, successAction, failedAction);
         }
 
-        private void SendRequest(string url,
+        private void SendGetRequest(string url,
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
@@ -41,6 +44,25 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             var webRequest = webRequestFactory.Create<WindowsWebRequest>(rawData, url);
 
             successAction(webRequest);
-         }
+        }
+
+        private void SendPostRequest(Dictionary<string, string> formData,
+            string url,
+            OnWebRequestSuccessAction successAction,
+            OnWebRequestFailedAction failedAction)
+        {
+            string responseInString = string.Empty;
+
+            using (var wb = new WebClient())
+            {
+                var response = wb.UploadValues(url, "POST", formData.ToNameValueCollection());
+                responseInString = Encoding.UTF8.GetString(response);
+            }
+
+            var webRequestFactory = new Factory<IWebRequest>();
+            var webRequest = webRequestFactory.Create<WindowsWebRequest>(responseInString, url);
+
+            successAction(webRequest);
+        }
     }
 }

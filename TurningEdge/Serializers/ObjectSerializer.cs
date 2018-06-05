@@ -8,7 +8,7 @@ namespace TurningEdge.Serializing
 {
     public static class ObjectSerializer
     {
-        public static byte[] ToBytes<T>(T obj)
+        public static byte[] ToBytes<T>(this T obj)
         {
             if (obj == null)
                 throw new SerializerException("Cannot serialize a null object to a byte array.");
@@ -21,7 +21,7 @@ namespace TurningEdge.Serializing
         }
 
         // Convert a byte array to an Object
-        public static T ToObject<T>(byte[] bytes)
+        public static T ToObject<T>(this byte[] bytes)
         {
             if (bytes == null || bytes.Length == 0)
                 throw new SerializerException("Cannot convert bytes to object due to a null or empty byte array.");

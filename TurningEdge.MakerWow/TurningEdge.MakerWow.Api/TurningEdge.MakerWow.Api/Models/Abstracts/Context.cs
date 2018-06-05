@@ -23,6 +23,7 @@ namespace TurningEdge.MakerWow.Api.Windows
             OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction);
 
         public abstract void SetWorldData(
-            WorldData[] worldDatas, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction);
+            ChunkData[] worldDatas, OnWebRequestSuccessAction successAction, 
+            OnWebRequestFailedAction failedAction);
     }
 }

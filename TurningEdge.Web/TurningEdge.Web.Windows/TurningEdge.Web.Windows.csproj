@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DictionaryHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebContext\Concretes\WindowsWebContext.cs" />
     <Compile Include="WebResult\Concretes\WindowsWebRequest.cs" />

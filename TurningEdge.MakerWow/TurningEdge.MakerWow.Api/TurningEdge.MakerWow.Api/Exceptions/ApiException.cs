@@ -10,6 +10,13 @@ namespace TurningEdge.MakerWow.Api.Exceptions
     public class ApiException : Exception
     {
         private int _id;
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
         public ApiException(int id) { _id = id; }
         public ApiException(int id, string message) 
             : base(message) { _id = id; }

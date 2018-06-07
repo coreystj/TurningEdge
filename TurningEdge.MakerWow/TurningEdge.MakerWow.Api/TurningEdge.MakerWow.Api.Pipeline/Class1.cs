@@ -21,31 +21,64 @@ namespace TurningEdge.MakerWow.Api.Pipeline
     {
         private static void Main(string[] args)
         {
-            MakerWOWApi.Login("corey", "st-jacques", onLoginSuccess, onLoginFailed);
-
-            User user = null;
-            WorldLayer worldLayer = null;
-            ChunkDataFactory chunkDataFactory = new ChunkDataFactory(user);
-
-            ChunkData[] chunkDatas = new ChunkData[] {
-                chunkDataFactory.Create(worldLayer, 0, 0)
-            };
-
             var webContextFactory = new Factory<IWebContext>();
             IWebContext webContext = webContextFactory.Create<WindowsWebContext>();
             MakerWOWApi.SetWebContext(webContext);
-            //MakerWOWApi.GetWorldData(OnGetWorldDataSuccess, OnGetWorldDataFailed);
-            MakerWOWApi.SetChunkData(chunkDatas, OnGetChunkDataSuccess, OnGetChunkDataFailed);
+
+
+            MakerWOWApi.Login("corey_stjacques@hotmail.com", "9751058aA2", 
+                onLoginSuccess, onLoginFailed);
+        }
+
+        private static void onLoginFailed(ApiException exception)
+        {
+            Debugging.Debugger.PrintError(exception);
+        }
+
+        private static void onLoginSuccess(User user)
+        {
+            MakerWOWApi.GetWorldLayers(onGetWorldLayersSuccessAction, onGetWorldLayersSuccessAction);
+        }
+
+        private static void onGetWorldLayersSuccessAction(ApiException exception)
+        {
+            Debugging.Debugger.PrintError(exception);
+        }
+
+        private static void onGetWorldLayersSuccessAction(WorldLayer[] worldLayers)
+        {
+
+            WorldLayer worldLayer = worldLayers[0];
+            ChunkDataFactory chunkDataFactory = new ChunkDataFactory(MakerWOWApi.CurrentUser);
+
+            ChunkData[] chunkDatas = new ChunkData[] {
+                chunkDataFactory.Create(worldLayer, 6, 5),
+                chunkDataFactory.Create(worldLayer, 7, 5),
+                chunkDataFactory.Create(worldLayer, 8, 5),
+                chunkDataFactory.Create(worldLayer, 9, 5)
+            };
+            MakerWOWApi.SetChunkData(chunkDatas, OnSetChunkDataSuccess, OnSetChunkDataFailed);
+        }
+
+        private static void OnSetChunkDataFailed(ApiException exception)
+        {
+            Debugging.Debugger.PrintError(exception);
+        }
+
+        private static void OnSetChunkDataSuccess()
+        {
+            MakerWOWApi.GetChunkData(OnGetWorldDataSuccess, OnGetWorldDataFailed);
+        }
+
+        private static void OnGetWorldDataSuccess(ChunkData[] chunks)
+        {
+
             Console.ReadLine();
         }
 
-        private static void OnGetChunkDataFailed(ApiException exception)
+        private static void OnGetWorldDataFailed(ApiException exception)
         {
-            throw new NotImplementedException();
-        }
-
-        private static void OnGetChunkDataSuccess()
-        {
+            Debugging.Debugger.PrintError(exception);
         }
     }
 }

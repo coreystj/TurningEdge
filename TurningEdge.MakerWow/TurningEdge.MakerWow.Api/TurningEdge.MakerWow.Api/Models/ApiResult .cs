@@ -78,7 +78,15 @@ namespace TurningEdge.MakerWow.Api.Models
         {
             get
             {
-                return _json.Json["error"].ToError();
+                try
+                {
+                    return _json.Json["error"].ToError();
+                }
+                catch(Exception e)
+                {
+                    var error = new ApiException(1, "Json Parse Error: " + _json.RawJson, e);
+                    return error;
+                }
             }
         }
 

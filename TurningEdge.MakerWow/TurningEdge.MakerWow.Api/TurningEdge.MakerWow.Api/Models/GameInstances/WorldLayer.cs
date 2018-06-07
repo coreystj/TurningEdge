@@ -61,16 +61,27 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
         protected override void ParseJson(Dictionary<string, object> record)
         {
-            throw new NotImplementedException();
+            _id = int.Parse((string)record["id"]);
+            _userId = int.Parse((string)record["user_id"]);
+            _name = (string)record["name"];
+            _description = (string)record["description"];
+            _environmentId = int.Parse((string)record["environment"]);
         }
 
-        public override Dictionary<string, object> SerializeJson()
+        public override string SerializeJson()
         {
-            var record = new Dictionary<string, object>();
+            var record = new StringBuilder();
+            record.Append("{");
 
-            throw new NotImplementedException();
+            //record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
+            //record.Append("\"" + "user_id" + "\"" + " : " + "\"" + _userId + "\"" + ",");
+            record.Append("\"" + "name" + "\"" + " : " + "\"" + _name + "\"" + ",");
+            record.Append("\"" + "description" + "\"" + " : " + "\"" + _description + "\"" + ",");
+            record.Append("\"" + "environment" + "\"" + " : " + "\"" + _environmentId + "\"");
 
-            return record;
+            record.Append("}");
+
+            return record.ToString();
         }
     }
 }

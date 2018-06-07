@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Api.DataTypes
 {
+    [Serializable]
     public struct Construction
     {
         public byte[] ConstructionId;

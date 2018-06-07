@@ -17,6 +17,6 @@ namespace TurningEdge.MakerWow.Api.Models.Abstracts
         }
 
         protected abstract void ParseJson(Dictionary<string, object> record);
-        public abstract Dictionary<string, object> SerializeJson();
+        public abstract string SerializeJson();
     }
 }

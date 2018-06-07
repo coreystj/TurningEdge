@@ -30,5 +30,20 @@ namespace TurningEdge.MakerWow.Api.Helpers
             var factory = new Factory<JsonObject>();
             return factory.Create<T>(rawRecord) as T;
         }
+
+        public static string SerializeJson<T>(this T[] records)
+                where T : JsonObject
+        {
+            var listRecord = new StringBuilder();
+            listRecord.Append("[");
+            int i = 0;
+            foreach (var record in records)
+            {
+                listRecord.Append(record.SerializeJson() + ((i < records.Length - 1)?",": string.Empty));
+                i++;
+            }
+            listRecord.Append("]");
+            return listRecord.ToString();
+        }
     }
 }

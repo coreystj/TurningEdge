@@ -49,7 +49,7 @@
     <Compile Include="Managers\MakerWOWApi.cs" />
     <Compile Include="Models\Abstracts\JsonObject.cs" />
     <Compile Include="Models\ApiResult .cs" />
-    <Compile Include="Models\GameInstances\WorldData.cs" />
+    <Compile Include="Models\GameInstances\ChunkData.cs" />
     <Compile Include="Models\Abstracts\Context.cs" />
     <Compile Include="Models\GameInstances\WorldLayer.cs" />
     <Compile Include="Models\User.cs" />

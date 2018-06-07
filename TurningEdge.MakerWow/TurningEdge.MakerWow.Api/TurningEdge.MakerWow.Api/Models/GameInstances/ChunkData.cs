@@ -75,6 +75,13 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             _x = x;
             _y = y;
             _layerId = layerId;
+
+            _landscapeBuffer.Color = new byte[256];
+            _landscapeBuffer.Ground = new byte[256];
+            _landscapeBuffer.Height = new byte[256];
+
+            _constructionBuffer.ConstructionId = new byte[256];
+            _constructionBuffer.RotationIndex = new byte[256];
         }
 
         public ChunkData(object result)
@@ -93,18 +100,22 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             _constructionBuffer = ((string)record["objects"]).Decode().ToObject<Construction>();
         }
 
-        public override Dictionary<string, object> SerializeJson()
+        public override string SerializeJson()
         {
-            var record = new Dictionary<string, object>();
+            var record = new StringBuilder();
 
-            record["user_id"] = _userId.ToString();
-            record["world_layer_id"] = _layerId.ToString();
-            record["x_coordinate"] = _x.ToString();
-            record["y_coordinate"] = _y.ToString();
-            record["landscape"] = _landscapeBuffer.ToBytes().Encode();
-            record["objects"] = _constructionBuffer.ToBytes().Encode();
+            record.Append("{");
 
-            return record;
+            record.Append("\"" + "user_id" + "\"" + " : " + "\"" + _userId + "\"" + ",");
+            record.Append("\"" + "world_layer_id" + "\"" + " : " + "\"" + _layerId + "\"" + ",");
+            record.Append("\"" + "x_coordinate" + "\"" + " : " + "\"" + _x + "\"" + ",");
+            record.Append("\"" + "y_coordinate" + "\"" + " : " + "\"" + _y + "\"" + ",");
+            record.Append("\"" + "landscape" + "\"" + " : " + "\"" + _landscapeBuffer.ToBytes().Encode() + "\"" + ",");
+            record.Append("\"" + "objects" + "\"" + " : " + "\"" + _constructionBuffer.ToBytes().Encode() + "\"");
+
+            record.Append("}");
+
+            return record.ToString();
         }
     }
 }

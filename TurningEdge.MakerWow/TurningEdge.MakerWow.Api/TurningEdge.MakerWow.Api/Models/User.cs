@@ -32,7 +32,7 @@ namespace TurningEdge.MakerWow.Api.Models
                 return _fName;
             }
         }
-        public string NName
+        public string LName
         {
             get
             {
@@ -94,18 +94,22 @@ namespace TurningEdge.MakerWow.Api.Models
             _status = EnumHelper.ParseEnum<RegistrationStatus>(((string)record["status"]));
         }
 
-        public override Dictionary<string, object> SerializeJson()
+        public override string SerializeJson()
         {
-            var record = new Dictionary<string, object>();
+            var record = new StringBuilder();
 
-            record["id"] = _id.ToString();
-            record["fname"] = _fName;
-            record["lname"] = _lName;
-            record["email"] = _email;
-            record["register_date"] = _registerDate.ToString("yyyy-MM-dd HH:mm:ss");
-            record["status"] = _status.ToString().ToUpper();
+            record.Append("{");
 
-            return record;
+            //record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
+            record.Append("\"" + "fname" + "\"" + " : " + "\"" + _fName + "\"" + ",");
+            record.Append("\"" + "lname" + "\"" + " : " + "\"" + _lName + "\"" + ",");
+            record.Append("\"" + "email" + "\"" + " : " + "\"" + _email + "\"" + ",");
+            record.Append("\"" + "register_date" + "\"" + " : " + "\"" + _registerDate.ToString("yyyy-MM-dd HH:mm:ss") + "\"" + ",");
+            record.Append("\"" + "status" + "\"" + " : " + "\"" + _status.ToString().ToUpper() + "\"");
+
+            record.Append("}");
+
+            return record.ToString();
         }
     }
 }

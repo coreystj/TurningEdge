@@ -11,70 +11,10 @@ using TurningEdge.Web.Models;
 
 namespace TurningEdge.MakerWow.Api.Models
 {
-    public class ApiResult<T>
+    public class ApiResult<T> : ApiContext
         where T : JsonObject
     {
-        private JsonResult _json;
-
-        public string Url
-        {
-            get
-            {
-                return (string)_json.Json["url"];
-            }
-        }
-
-        public string DatetimeFormat
-        {
-            get
-            {
-                return (string)_json.Json["datetime_format"];
-            }
-        }
-
-        public DateTime Datetime
-        {
-            get
-            {
-                return DateTime.ParseExact(
-                    (string)_json.Json["datetime"], 
-                    "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture);
-            }
-        }
-
-        public Dictionary<string, object> GetArguments
-        {
-            get
-            {
-                var colection = (ICollection)_json.Json["GET"];
-                if (colection.Count > 0)
-                    return (Dictionary<string, object>)colection;
-                else
-                    return new Dictionary<string, object>();
-            }
-        }
-
-        public Dictionary<string, object> PostArguments
-        {
-            get
-            {
-                var colection = (ICollection)_json.Json["POST"];
-                if (colection.Count > 0)
-                    return (Dictionary<string, object>)colection;
-                else
-                    return new Dictionary<string, object>();
-            }
-        }
-
-        public User CurrentUser
-        {
-            get
-            {
-                return _json.Json["user"].ParseSingle<User>();
-            }
-        }
-
-        public ApiException Error
+        public override ApiException Error
         {
             get
             {
@@ -82,19 +22,11 @@ namespace TurningEdge.MakerWow.Api.Models
                 {
                     return _json.Json["error"].ToError();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     var error = new ApiException(1, "Json Parse Error: " + _json.RawJson, e);
                     return error;
                 }
-            }
-        }
-
-        public string Sql
-        {
-            get
-            {
-                return (string)_json.Json["sql"];
             }
         }
 
@@ -107,27 +39,14 @@ namespace TurningEdge.MakerWow.Api.Models
             }
         }
 
-        public bool IsWritingLogs
-        {
-            get
-            {
-                return (bool)_json.Json["write_logs"];
-            }
-        }
-
-        public JsonResult Json
-        {
-            get { return _json; }
-        }
-
         public ApiResult(JsonResult json)
+            : base(json)
         {
-            _json = json;
         }
 
         public ApiResult(string rawJson)
+            : base(rawJson)
         {
-            _json = new JsonResult(rawJson);
         }
 
     }

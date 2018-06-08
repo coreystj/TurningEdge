@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using TurningEdge.Generics.Factories;
+using TurningEdge.Serializing;
 using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
@@ -15,6 +16,8 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
 {
     public class WindowsWebContext : IWebContext
     {
+
+        private CookieContainer container = new CookieContainer();
 
         public void Get(string url, 
             OnWebRequestSuccessAction successAction, 
@@ -36,8 +39,10 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             OnWebRequestFailedAction failedAction)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
+            request.CookieContainer = container;
+            request.Method = "GET";
             var response = (HttpWebResponse)request.GetResponse();
-
+            ReadCookies(response);
             var webRequestFactory = new Factory<IWebRequest>();
 
             string rawData = new StreamReader(response.GetResponseStream()).ReadToEnd();
@@ -51,18 +56,60 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
-            string responseInString = string.Empty;
+            string json = JSON.JSONWriter.ToJson(formData);
 
-            using (var wb = new WebClient())
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.CookieContainer = container;
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = json.Length;
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
-                var response = wb.UploadValues(url, "POST", formData.ToNameValueCollection());
-                responseInString = Encoding.UTF8.GetString(response);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
             }
 
+            var response = (HttpWebResponse)request.GetResponse();
+            ReadCookies(response);
             var webRequestFactory = new Factory<IWebRequest>();
-            var webRequest = webRequestFactory.Create<WindowsWebRequest>(responseInString, url);
+
+            string rawData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            var webRequest = webRequestFactory.Create<WindowsWebRequest>(rawData, url);
 
             successAction(webRequest);
+        }
+
+        //private void SendPostRequest(Dictionary<string, string> formData,
+        //    string url,
+        //    OnWebRequestSuccessAction successAction,
+        //    OnWebRequestFailedAction failedAction)
+        //{
+        //    string responseInString = string.Empty;
+
+        //    using (var wb = new WebClient())
+        //    {
+        //        wb.Headers.Add(HttpRequestHeader.Cookie, "WindowsWebContext");
+        //        var response = wb.UploadValues(url, "POST", formData.ToNameValueCollection());
+        //        responseInString = Encoding.UTF8.GetString(response);
+        //    }
+
+        //    var webRequestFactory = new Factory<IWebRequest>();
+        //    var webRequest = webRequestFactory.Create<WindowsWebRequest>(responseInString, url);
+
+        //    successAction(webRequest);
+        //}
+
+        private void ReadCookies(WebResponse r)
+        {
+            var response = r as HttpWebResponse;
+            if (response != null)
+            {
+                CookieCollection cookies = response.Cookies;
+                container.Add(cookies);
+            }
         }
     }
 }

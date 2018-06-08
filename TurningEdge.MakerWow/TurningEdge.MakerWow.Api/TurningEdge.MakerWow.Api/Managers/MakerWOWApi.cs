@@ -8,6 +8,8 @@ using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Helpers;
 using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
+using TurningEdge.MakerWow.Api.Repositories;
+using TurningEdge.MakerWow.Api.Repositories.Abstracts;
 using TurningEdge.Web.Exceptions;
 using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
@@ -17,9 +19,24 @@ namespace TurningEdge.MakerWow.Api.Managers
 {
     public static class MakerWOWApi
     {
+        public static event OnErrorAction OnError = delegate { };
+
         private static User _user;
         private const string _baseUrl = "http://localhost:8080/api.php?action=";
         private static IWebContext _webContext;
+
+        private static ApiRepository<ChunkData> _chunkDataRepository;
+        private static ApiRepository<WorldLayer> _worldLayerRepository;
+
+        public static ApiRepository<ChunkData> ChunkDataRepository
+        {
+            get { return _chunkDataRepository; }
+        }
+        public static ApiRepository<WorldLayer> WorldLayerRepository
+        {
+            get { return _worldLayerRepository; }
+        }
+
 
         public static RegistrationStatus Status
         {
@@ -79,7 +96,13 @@ namespace TurningEdge.MakerWow.Api.Managers
 
         static MakerWOWApi()
         {
+            _chunkDataRepository = new ChunkDataRepository();
+            _worldLayerRepository = new WorldLayerRepository();
+        }
 
+        public static void FireOnError(ApiException exception)
+        {
+            OnError(exception);
         }
 
         public static void SetWebContext(IWebContext webContext)
@@ -94,21 +117,20 @@ namespace TurningEdge.MakerWow.Api.Managers
             formData.Add("username", username);
             formData.Add("password", password);
 
-            DoPostRequest(formData, _baseUrl + "account&process=login",
+            DoPostRequest(formData, "account&process=login",
             (IWebRequest result) => {
                 var apiResult = new ApiResult<ChunkData>(result.Json);
-                var error = apiResult.Error;
-                if (error.Id > 0)
-                    onLoginFailed(error);
+                if (apiResult.IsError)
+                    onLoginFailed(apiResult);
                 else
                 {
                     var user = apiResult.CurrentUser;
                     _user = user;
-                    onLoginSuccess(_user);
+                    onLoginSuccess(_user, apiResult);
                 }
             },
             (WebContextException error) => {
-                onLoginFailed(new ApiException(1, "Could not login.", error));
+                OnError(new ApiException(1, "Could not login.", error));
             });
         }
 
@@ -116,104 +138,24 @@ namespace TurningEdge.MakerWow.Api.Managers
         {
             var formData = new Dictionary<string, string>();
 
-            DoPostRequest(formData, _baseUrl + "account&process=logout",
+            DoPostRequest(formData, "account&process=logout",
             (IWebRequest result) => {
                 var apiResult = new ApiResult<ChunkData>(result.Json);
-                var error = apiResult.Error;
-                if (error.Id > 0)
-                    onLogoutFailed(error);
+                if (apiResult.IsError)
+                    onLogoutFailed(apiResult);
                 else
                 {
                     var user = apiResult.CurrentUser;
                     _user = null;
-                    onLogoutSuccess();
+                    onLogoutSuccess(apiResult);
                 }
             },
             (WebContextException error) => {
-                onLogoutFailed(new ApiException(1, "Could not login, check error logs.", error));
+                OnError(new ApiException(1, "Could not login, check error logs.", error));
             });
         }
 
-        public static void GetChunkData(
-            OnGetChunkDataSuccessAction onGetWorldDataSuccess, 
-            OnGetChunkDataFailedAction onGetWorldDataFailed)
-        {
-            DoGetRequest(_baseUrl + "read&table=chunk_data&id=" + Id,
-            (IWebRequest result) => {
-                var apiResult = new ApiResult<ChunkData>(result.Json);
-                var error = apiResult.Error;
-                if (error.Id > 0)
-                    onGetWorldDataFailed(new ApiException(1, "Could not retrieve chunk data.", error));
-                else
-                {
-                    var user = apiResult.CurrentUser;
-                    _user = null;
-                    onGetWorldDataSuccess(apiResult.Records);
-                }
-            },
-            (WebContextException error) => {
-                onGetWorldDataFailed(new ApiException(1, "Could not retrieve chunk data.", error));
-            });
-        }
-
-        public static void SetChunkData(
-            ChunkData[] chunkDatas,
-            OnSetChunkDataSuccessAction onSetChunkDataSuccess,
-            OnSetChunkDataFailedAction onSetChunkDataFailed)
-        {
-            var formData = new Dictionary<string, string>();
-            formData.Add("records", chunkDatas.SerializeJson());
-
-            DoPostRequest(formData,
-            _baseUrl + "create&table=chunk_data&id=" + Id,
-            (IWebRequest result) => {
-                onSetChunkDataSuccess();
-            },
-            (WebContextException error) => {
-                onSetChunkDataFailed(new ApiException(1, "Could not set chunk data.", error));
-            });
-        }
-
-        public static void GetWorldLayers(
-            OnGetWorldLayersSuccessAction onGetWorldDataSuccess,
-            OnGetWorldLayersFailedAction onGetWorldDataFailed)
-        {
-            DoGetRequest(_baseUrl + "read&table=world_layers&id=" + Id,
-            (IWebRequest result) => {
-                var apiResult = new ApiResult<WorldLayer>(result.Json);
-                var error = apiResult.Error;
-                if (error.Id > 0)
-                    onGetWorldDataFailed(new ApiException(1, "Could not retrieve world layer.", error));
-                else
-                {
-                    var user = apiResult.CurrentUser;
-                    onGetWorldDataSuccess(apiResult.Records);
-                }
-            },
-            (WebContextException error) => {
-                onGetWorldDataFailed(new ApiException(1, "Could not retrieve world layer.", error));
-            });
-        }
-
-        public static void SetWorldLayers(
-            WorldLayer[] worldLayers,
-            OnSetWorldLayersSuccessAction onSetWorldLayersSuccess,
-            OnSetWorldLayersFailedAction onSetWorldLayersFailed)
-        {
-            var formData = new Dictionary<string, string>();
-            formData.Add("records", worldLayers.SerializeJson());
-
-            DoPostRequest(formData,
-            _baseUrl + "read&table=world_layers&id=" + Id,
-            (IWebRequest result) => {
-                onSetWorldLayersSuccess();
-            },
-            (WebContextException error) => {
-                onSetWorldLayersFailed(new ApiException(1, "Could not set world layer.", error));
-            });
-        }
-
-        private static void DoGetRequest(string url, 
+        public static void DoGetRequest(string url, 
             OnWebRequestSuccessAction successAction, 
             OnWebRequestFailedAction failedAction)
         {
@@ -228,12 +170,12 @@ namespace TurningEdge.MakerWow.Api.Managers
             };
 
             _webContext.Get(
-                url,
+                _baseUrl + url,
                 onSuccessAction,
                 onFailedAction);
         }
 
-        private static void DoPostRequest(
+        public static void DoPostRequest(
             Dictionary<string, string> formData,
             string url,
             OnWebRequestSuccessAction successAction,
@@ -251,7 +193,7 @@ namespace TurningEdge.MakerWow.Api.Managers
 
             _webContext.Post(
                 formData,
-                url,
+                _baseUrl + url,
                 onSuccessAction,
                 onFailedAction);
         }

@@ -8,6 +8,7 @@ using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Factories;
 using TurningEdge.MakerWow.Api.Managers;
 using TurningEdge.MakerWow.Api.Models;
+using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
 using TurningEdge.MakerWow.Api.Windows;
 using TurningEdge.Web.Exceptions;
@@ -25,27 +26,19 @@ namespace TurningEdge.MakerWow.Api.Pipeline
             IWebContext webContext = webContextFactory.Create<WindowsWebContext>();
             MakerWOWApi.SetWebContext(webContext);
 
-
+            MakerWOWApi.OnError += MakerWOWApi_OnError;
             MakerWOWApi.Login("corey_stjacques@hotmail.com", "9751058aA2", 
-                onLoginSuccess, onLoginFailed);
+                onLoginSuccess, OnCrudFailed);
         }
 
-        private static void onLoginFailed(ApiException exception)
+        private static void onLoginSuccess(User user, ApiContext context)
         {
-            Debugging.Debugger.PrintError(exception);
+            MakerWOWApi.WorldLayerRepository.Read(
+                onGetWorldLayersSuccessAction,
+                OnCrudFailed);
         }
 
-        private static void onLoginSuccess(User user)
-        {
-            MakerWOWApi.GetWorldLayers(onGetWorldLayersSuccessAction, onGetWorldLayersSuccessAction);
-        }
-
-        private static void onGetWorldLayersSuccessAction(ApiException exception)
-        {
-            Debugging.Debugger.PrintError(exception);
-        }
-
-        private static void onGetWorldLayersSuccessAction(WorldLayer[] worldLayers)
+        private static void onGetWorldLayersSuccessAction(WorldLayer[] worldLayers, ApiResult<WorldLayer> context)
         {
 
             WorldLayer worldLayer = worldLayers[0];
@@ -57,28 +50,30 @@ namespace TurningEdge.MakerWow.Api.Pipeline
                 chunkDataFactory.Create(worldLayer, 8, 5),
                 chunkDataFactory.Create(worldLayer, 9, 5)
             };
-            MakerWOWApi.SetChunkData(chunkDatas, OnSetChunkDataSuccess, OnSetChunkDataFailed);
+            MakerWOWApi.ChunkDataRepository.Create(
+                chunkDatas, OnSetChunkDataSuccess, OnCrudFailed);
         }
 
-        private static void OnSetChunkDataFailed(ApiException exception)
+        private static void OnSetChunkDataSuccess(ApiContext context)
         {
-            Debugging.Debugger.PrintError(exception);
+            MakerWOWApi.ChunkDataRepository.Read(OnGetWorldDataSuccess, OnCrudFailed);
         }
 
-        private static void OnSetChunkDataSuccess()
-        {
-            MakerWOWApi.GetChunkData(OnGetWorldDataSuccess, OnGetWorldDataFailed);
-        }
-
-        private static void OnGetWorldDataSuccess(ChunkData[] chunks)
+        private static void OnGetWorldDataSuccess(ChunkData[] chunks, ApiResult<ChunkData> context)
         {
 
             Console.ReadLine();
         }
 
-        private static void OnGetWorldDataFailed(ApiException exception)
+
+        private static void MakerWOWApi_OnError(ApiException exception)
         {
             Debugging.Debugger.PrintError(exception);
+        }
+
+        private static void OnCrudFailed(ApiContext context)
+        {
+            Debugging.Debugger.PrintError(context.Error);
         }
     }
 }

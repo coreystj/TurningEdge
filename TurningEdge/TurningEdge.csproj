@@ -66,6 +66,9 @@
     <Compile Include="Serializers\ObjectSerializer.cs" />
     <Compile Include="Serializers\Base64Serializer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Delegates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Users\Corey\Desktop\Documents\VS_Projects\DllCloner\DllCloner\bin\Debug\DllCloner.exe"</PostBuildEvent>

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\Construction.cs" />
+    <Compile Include="DataTypes\CrudTypes.cs" />
     <Compile Include="DataTypes\Landscape.cs" />
     <Compile Include="DataTypes\RegistrationStatus.cs" />
     <Compile Include="Delegates\RequestDelegates.cs" />
@@ -46,15 +47,20 @@
     <Compile Include="Factories\ChunkDataFactory.cs" />
     <Compile Include="Helpers\ApiExceptionHelper.cs" />
     <Compile Include="Helpers\RecordHelper.cs" />
+    <Compile Include="Interfaces\IApiRepository.cs" />
     <Compile Include="Managers\MakerWOWApi.cs" />
+    <Compile Include="Models\Abstracts\ApiContext.cs" />
     <Compile Include="Models\Abstracts\JsonObject.cs" />
+    <Compile Include="Models\ApiAction.cs" />
     <Compile Include="Models\ApiResult .cs" />
     <Compile Include="Models\GameInstances\ChunkData.cs" />
     <Compile Include="Models\Abstracts\Context.cs" />
     <Compile Include="Models\GameInstances\WorldLayer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\WorldDataRepository.cs" />
+    <Compile Include="Repositories\Abstracts\ApiRepository.cs" />
+    <Compile Include="Repositories\ChunkDataRepository.cs" />
+    <Compile Include="Repositories\WorldLayerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">

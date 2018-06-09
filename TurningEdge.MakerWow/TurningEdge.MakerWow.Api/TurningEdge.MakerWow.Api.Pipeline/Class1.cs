@@ -22,10 +22,8 @@ namespace TurningEdge.MakerWow.Api.Pipeline
     {
         private static void Main(string[] args)
         {
-            var webContextFactory = new Factory<IWebContext>();
-            IWebContext webContext = webContextFactory.Create<WindowsWebContext>();
-            MakerWOWApi.SetWebContext(webContext);
 
+            MakerWOWApi.Initialize<WindowsWebContext>();
             MakerWOWApi.OnError += MakerWOWApi_OnError;
             MakerWOWApi.Login("corey_stjacques@hotmail.com", "9751058aA2", 
                 onLoginSuccess, OnCrudFailed);
@@ -33,35 +31,49 @@ namespace TurningEdge.MakerWow.Api.Pipeline
 
         private static void onLoginSuccess(User user, ApiContext context)
         {
-            MakerWOWApi.WorldLayerRepository.Read(
-                onGetWorldLayersSuccessAction,
-                OnCrudFailed);
+            //MakerWOWApi.WorldLayerRepository.Read(
+            //    onGetWorldLayersSuccessAction,
+            //    OnCrudFailed);
+
+            MakerWOWApi.Logout(OnSetChunkDataFailed, OnCrudFailed);
+
+
         }
 
         private static void onGetWorldLayersSuccessAction(WorldLayer[] worldLayers, ApiResult<WorldLayer> context)
         {
 
-            WorldLayer worldLayer = worldLayers[0];
-            ChunkDataFactory chunkDataFactory = new ChunkDataFactory(MakerWOWApi.CurrentUser);
+            //WorldLayer worldLayer = worldLayers[0];
+            //ChunkDataFactory chunkDataFactory = new ChunkDataFactory(MakerWOWApi.CurrentUser);
 
-            ChunkData[] chunkDatas = new ChunkData[] {
-                chunkDataFactory.Create(worldLayer, 6, 5),
-                chunkDataFactory.Create(worldLayer, 7, 5),
-                chunkDataFactory.Create(worldLayer, 8, 5),
-                chunkDataFactory.Create(worldLayer, 9, 5)
-            };
-            MakerWOWApi.ChunkDataRepository.Create(
-                chunkDatas, OnSetChunkDataSuccess, OnCrudFailed);
+            //ChunkData[] chunkDatas = new ChunkData[] {
+            //    chunkDataFactory.Create(worldLayer, 6, 5),
+            //    chunkDataFactory.Create(worldLayer, 7, 5),
+            //    chunkDataFactory.Create(worldLayer, 8, 5),
+            //    chunkDataFactory.Create(worldLayer, 9, 5)
+            //};
+            //MakerWOWApi.ChunkDataRepository.Create(
+            //    chunkDatas, OnSetChunkDataSuccess, OnSetChunkDataFailed);
+        }
+
+        private static void OnSetChunkDataFailed(ApiContext context)
+        {
+            MakerWOWApi.WorldLayerRepository.Create(
+                new WorldLayer[] { new WorldLayer(0, MakerWOWApi.Id, "Holaaa", "description....", 99) },
+                OnSetChunkDataSuccess,
+                OnCrudFailed);
+
+            //MakerWOWApi.ChunkDataRepository.Read(1, OnGetWorldDataSuccess, OnCrudFailed);
         }
 
         private static void OnSetChunkDataSuccess(ApiContext context)
         {
-            MakerWOWApi.ChunkDataRepository.Read(OnGetWorldDataSuccess, OnCrudFailed);
+            MakerWOWApi.WorldLayerRepository.Read(OnGetWorldDataSuccess, OnCrudFailed);
         }
 
-        private static void OnGetWorldDataSuccess(ChunkData[] chunks, ApiResult<ChunkData> context)
+        private static void OnGetWorldDataSuccess(WorldLayer[] chunks, ApiResult<WorldLayer> context)
         {
-
+            MakerWOWApi.WorldLayerRepository.Delete(chunks, OnSetChunkDataSuccess, OnCrudFailed);
             Console.ReadLine();
         }
 

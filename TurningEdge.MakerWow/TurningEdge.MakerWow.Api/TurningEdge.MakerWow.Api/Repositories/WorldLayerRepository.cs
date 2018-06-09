@@ -14,7 +14,7 @@ namespace TurningEdge.MakerWow.Api.Repositories
             primaryKeys.Add("id");
             primaryKeys.Add("user_id");
 
-            return "world_layer";
+            return "world_layers";
         }
     }
 }

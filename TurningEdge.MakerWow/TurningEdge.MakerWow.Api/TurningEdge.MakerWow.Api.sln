@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web.Windows", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Web", "..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj", "{99FF16F8-6F2E-4145-92AC-849CEA177E15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.WindowsSocket", "..\..\TurningEdge.Networking\TurningEdge.Networking.WindowsSocket\TurningEdge.Networking.WindowsSocket.csproj", "{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking", "..\..\TurningEdge.Networking\TurningEdge.Networking\TurningEdge.Networking.csproj", "{59B3DF82-90E5-4F50-B125-BA396BADE926}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99FF16F8-6F2E-4145-92AC-849CEA177E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

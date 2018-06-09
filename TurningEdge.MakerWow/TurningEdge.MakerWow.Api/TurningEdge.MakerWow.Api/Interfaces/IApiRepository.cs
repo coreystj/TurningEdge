@@ -11,7 +11,7 @@ namespace TurningEdge.MakerWow.Api.Interfaces
         where T : JsonObject
     {
         void Create(T[] models, OnSuccessAction  onCreateSuccessAction, OnFailedAction onCreateFailedAction);
-        void Read  (OnGetSuccessAction<T> onReadSuccessAction, OnFailedAction onReadFailedAction);
+        void Read  (OnGetSuccessAction<T> onReadSuccessAction, OnFailedAction onReadFailedAction, Dictionary<string, string> filter = null);
         void Update(T[] models, OnSuccessAction  onUpdateSuccessAction,  OnFailedAction    onUpdateFailedAction);
         void Delete(T[] models, OnSuccessAction  onDeleteSuccessAction, OnFailedAction onDeleteFailedAction);
     }

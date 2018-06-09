@@ -57,10 +57,6 @@
       <Project>{E6869595-840E-4734-A4DC-9E125DC34DCC}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TurningEdge.MakerWow.Api.Windows\TurningEdge.MakerWow.Api.Windows.csproj">
-      <Project>{61D3ABEF-CF03-492B-8471-ED75D4EFD09A}</Project>
-      <Name>TurningEdge.MakerWow.Api.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurningEdge.MakerWow.Api\TurningEdge.MakerWow.Api.csproj">
       <Project>{84EA5522-E8FC-4E74-8CDD-25565FEF6CA0}</Project>
       <Name>TurningEdge.MakerWow.Api</Name>

@@ -58,6 +58,7 @@
     <Compile Include="Generics\Interfaces\IView.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\HashSetHelper.cs" />
     <Compile Include="IO\Interfaces\IReader.cs" />
     <Compile Include="JSON\JSONParser.cs" />
     <Compile Include="JSON\JSONWriter.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TurningEdge.Generics.Factories;
 using TurningEdge.MakerWow.Api.DataTypes;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Exceptions;
@@ -25,14 +26,14 @@ namespace TurningEdge.MakerWow.Api.Managers
         private const string _baseUrl = "http://localhost:8080/api.php?action=";
         private static IWebContext _webContext;
 
-        private static ApiRepository<ChunkData> _chunkDataRepository;
-        private static ApiRepository<WorldLayer> _worldLayerRepository;
+        private static ChunkDataRepository _chunkDataRepository;
+        private static WorldLayerRepository _worldLayerRepository;
 
-        public static ApiRepository<ChunkData> ChunkDataRepository
+        public static ChunkDataRepository ChunkDataRepository
         {
             get { return _chunkDataRepository; }
         }
-        public static ApiRepository<WorldLayer> WorldLayerRepository
+        public static WorldLayerRepository WorldLayerRepository
         {
             get { return _worldLayerRepository; }
         }
@@ -100,6 +101,14 @@ namespace TurningEdge.MakerWow.Api.Managers
             _worldLayerRepository = new WorldLayerRepository();
         }
 
+        public static void Initialize<T>()
+            where T : IWebContext
+        {
+            var webContextFactory = new Factory<T>();
+            IWebContext webContext = webContextFactory.Create<T>();
+            MakerWOWApi.SetWebContext(webContext);
+        }
+
         public static void FireOnError(ApiException exception)
         {
             OnError(exception);
@@ -145,7 +154,6 @@ namespace TurningEdge.MakerWow.Api.Managers
                     onLogoutFailed(apiResult);
                 else
                 {
-                    var user = apiResult.CurrentUser;
                     _user = null;
                     onLogoutSuccess(apiResult);
                 }

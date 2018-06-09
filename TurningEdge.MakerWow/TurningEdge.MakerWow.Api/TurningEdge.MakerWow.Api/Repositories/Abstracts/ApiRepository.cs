@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TurningEdge.Generics.Interfaces;
+using TurningEdge.Helpers;
 using TurningEdge.MakerWow.Api.DataTypes;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Exceptions;
@@ -13,6 +14,7 @@ using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
 using TurningEdge.Web.Exceptions;
+using TurningEdge.Web.Helpers;
 using TurningEdge.Web.WebResult.Interfaces;
 
 namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
@@ -20,6 +22,7 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
     public abstract class ApiRepository<T> : IApiRepository<T>
         where T : JsonObject
     {
+        protected HashSet<T> _models;
         protected string _tableName;
         protected string[] _primaryKeys;
 
@@ -33,8 +36,17 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
             get { return _primaryKeys; }
         }
 
+        public T[] Models
+        {
+            get
+            {
+                return _models.GetArray();
+            }
+        }
+
         public ApiRepository()
         {
+            _models = new HashSet<T>();
             var primaryKeys = new List<string>();
             _tableName = SetPrimaryData(primaryKeys);
             _primaryKeys = primaryKeys.ToArray();
@@ -53,6 +65,7 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
                 + "&table="+ _tableName,
             (IWebRequest result) => {
                 var apiResult = new ApiAction(result.Json);
+                var here = apiResult.LastRowAffected;
                 if (apiResult.IsError)
                 {
                     onCreateFailedAction(apiResult);
@@ -79,7 +92,10 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
                 if (apiResult.IsError)
                     onDeleteFailedAction(apiResult);
                 else
+                {
+                    _models.Remove(models);
                     onDeleteSuccessAction(apiResult);
+                }
             },
             (WebContextException error) => {
                 MakerWOWApi.FireOnError(new ApiException(1, "Could not update models.", error));
@@ -87,16 +103,19 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
         }
 
         public void Read(OnGetSuccessAction<T> onReadSuccessAction, 
-            OnFailedAction onReadFailedAction)
+            OnFailedAction onReadFailedAction, Dictionary<string, string> filter = null)
         {
-            MakerWOWApi.DoGetRequest(CrudType.Read.ToString().ToLower() 
-                + "&table=" + _tableName,
+            MakerWOWApi.DoGetRequest(CrudType.Read.ToString().ToLower() + "&"
+                + ((filter != null) ? filter.FormSerialize() : string.Empty) + "&table=" + _tableName,
             (IWebRequest result) => {
                 var apiResult = new ApiResult<T>(result.Json);
                 if (apiResult.IsError)
                     onReadFailedAction(apiResult);
                 else
+                {
+                    _models.Combine(apiResult.Records);
                     onReadSuccessAction(apiResult.Records, apiResult);
+                }
             },
             (WebContextException error) => {
                 MakerWOWApi.FireOnError(new ApiException(1, "Could not read models.", error));
@@ -114,6 +133,7 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
                 + "&table=" + _tableName,
             (IWebRequest result) => {
                 var apiResult = new ApiAction(result.Json);
+
                 if (apiResult.IsError)
                     onUpdateFailedAction(apiResult);
                 else

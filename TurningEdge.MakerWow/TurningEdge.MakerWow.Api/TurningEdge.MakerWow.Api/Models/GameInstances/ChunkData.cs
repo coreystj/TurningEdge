@@ -90,6 +90,28 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var model = obj as ChunkData;
+
+            return (model.GetHashCode() == GetHashCode());
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return LayerId.GetHashCode() 
+                    ^ UserId.GetHashCode() 
+                    ^ X.GetHashCode() 
+                    ^ Y.GetHashCode();
+        }
+
         protected override void ParseJson(Dictionary<string, object> record)
         {
             _userId = int.Parse((string)record["user_id"]);

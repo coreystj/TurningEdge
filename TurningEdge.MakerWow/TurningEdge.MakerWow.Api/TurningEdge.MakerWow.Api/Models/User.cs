@@ -83,6 +83,25 @@ namespace TurningEdge.MakerWow.Api.Models
         {
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var model = obj as User;
+
+            return (model.GetHashCode() == GetHashCode());
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return Email.GetHashCode();
+        }
+
         protected override void ParseJson(Dictionary<string, object> record)
         {
             _id = int.Parse((string)record["id"]);

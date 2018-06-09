@@ -59,6 +59,26 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
         {
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var model = obj as WorldLayer;
+
+            return (model.GetHashCode() == GetHashCode());
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode()
+                    ^ UserId.GetHashCode();
+        }
+
         protected override void ParseJson(Dictionary<string, object> record)
         {
             _id = int.Parse((string)record["id"]);
@@ -73,8 +93,8 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             var record = new StringBuilder();
             record.Append("{");
 
-            //record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
-            //record.Append("\"" + "user_id" + "\"" + " : " + "\"" + _userId + "\"" + ",");
+            record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
+            record.Append("\"" + "user_id" + "\"" + " : " + "\"" + _userId + "\"" + ",");
             record.Append("\"" + "name" + "\"" + " : " + "\"" + _name + "\"" + ",");
             record.Append("\"" + "description" + "\"" + " : " + "\"" + _description + "\"" + ",");
             record.Append("\"" + "environment" + "\"" + " : " + "\"" + _environmentId + "\"");

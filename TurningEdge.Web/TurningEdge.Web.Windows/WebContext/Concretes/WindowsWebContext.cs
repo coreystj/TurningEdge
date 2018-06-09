@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using TurningEdge.Generics.Factories;
 using TurningEdge.Serializing;
+using TurningEdge.Web.Helpers;
 using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
@@ -16,8 +17,12 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
 {
     public class WindowsWebContext : IWebContext
     {
+        private BReq _req;
 
-        private CookieContainer container = new CookieContainer();
+        public WindowsWebContext()
+        {
+            _req = new BReq();
+        }
 
         public void Get(string url, 
             OnWebRequestSuccessAction successAction, 
@@ -38,78 +43,131 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.CookieContainer = container;
-            request.Method = "GET";
-            var response = (HttpWebResponse)request.GetResponse();
-            ReadCookies(response);
             var webRequestFactory = new Factory<IWebRequest>();
-
-            string rawData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            string rawData = _req.HttpGet(url);
             var webRequest = webRequestFactory.Create<WindowsWebRequest>(rawData, url);
 
             successAction(webRequest);
         }
+
 
         private void SendPostRequest(Dictionary<string, string> formData,
             string url,
             OnWebRequestSuccessAction successAction,
             OnWebRequestFailedAction failedAction)
         {
-            string json = JSON.JSONWriter.ToJson(formData);
-
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.CookieContainer = container;
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = json.Length;
-
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-            ReadCookies(response);
             var webRequestFactory = new Factory<IWebRequest>();
-
-            string rawData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            string rawData = _req.HttpPost(url, formData.FormSerialize());
             var webRequest = webRequestFactory.Create<WindowsWebRequest>(rawData, url);
 
             successAction(webRequest);
         }
+    }
 
-        //private void SendPostRequest(Dictionary<string, string> formData,
-        //    string url,
-        //    OnWebRequestSuccessAction successAction,
-        //    OnWebRequestFailedAction failedAction)
+    /// <summary>
+    /// A simple basic class for HTTP Requests.
+    /// </summary>
+    public class BReq
+    {
+        /// <summary>
+        /// UserAgent to be used on the requests
+        /// </summary>
+        public string UserAgent = @"Mozilla/5.0 (Windows; Windows NT 6.1) AppleWebKit/534.23 (KHTML, like Gecko) Chrome/11.0.686.3 Safari/534.23";
+
+        /// <summary>
+        /// Cookie Container that will handle all the cookies.
+        /// </summary>
+        private CookieContainer cJar;
+
+        /// <summary>
+        /// Performs a basic HTTP GET request.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <returns>HTML Content of the response.</returns>
+        public string HttpGet(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.CookieContainer = cJar;
+            request.UserAgent = UserAgent;
+            request.KeepAlive = false;
+            request.Method = "GET";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader sr = new StreamReader(response.GetResponseStream());
+            return sr.ReadToEnd();
+        }
+
+        /// <summary>
+        /// Performs a basic HTTP POST request
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="post">POST Data to be passed.</param>
+        /// <param name="refer">Referrer of the request</param>
+        /// <returns>HTML Content of the response.</returns>
+        public string HttpPost(string url, string post, string refer = "")
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.CookieContainer = cJar;
+            request.UserAgent = UserAgent;
+            request.KeepAlive = false;
+            request.Method = "POST";
+            request.Referer = refer;
+
+            byte[] postBytes = Encoding.ASCII.GetBytes(post);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = postBytes.Length;
+
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(postBytes, 0, postBytes.Length);
+            requestStream.Close();
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader sr = new StreamReader(response.GetResponseStream());
+
+            return sr.ReadToEnd();
+        }
+
+        ///// <summary>
+        ///// Gets the image from the response stream.
+        ///// </summary>
+        ///// <param name="imageUrl">The image URL.</param>
+        ///// <returns>Image type of the image</returns>
+        //public Image GetImage(string imageUrl)
         //{
-        //    string responseInString = string.Empty;
-
-        //    using (var wb = new WebClient())
-        //    {
-        //        wb.Headers.Add(HttpRequestHeader.Cookie, "WindowsWebContext");
-        //        var response = wb.UploadValues(url, "POST", formData.ToNameValueCollection());
-        //        responseInString = Encoding.UTF8.GetString(response);
-        //    }
-
-        //    var webRequestFactory = new Factory<IWebRequest>();
-        //    var webRequest = webRequestFactory.Create<WindowsWebRequest>(responseInString, url);
-
-        //    successAction(webRequest);
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
+        //    request.CookieContainer = cJar;
+        //    request.UserAgent = UserAgent;
+        //    request.KeepAlive = false;
+        //    request.Method = "GET";
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    return Image.FromStream(response.GetResponseStream());
         //}
 
-        private void ReadCookies(WebResponse r)
+        /// <summary>
+        /// Creates an HTML file from the string.
+        /// </summary>
+        /// <param name="html">HTML String.</param>
+        public void DebugHtml(string html)
         {
-            var response = r as HttpWebResponse;
-            if (response != null)
-            {
-                CookieCollection cookies = response.Cookies;
-                container.Add(cookies);
-            }
+            StreamWriter sw = new StreamWriter("debug.html");
+            sw.Write(html);
+            sw.Close();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BReq"/> class.
+        /// </summary>
+        public BReq()
+        {
+            cJar = new CookieContainer();
+        }
+
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="BReq"/> is reclaimed by garbage collection.
+        /// </summary>
+        ~BReq()
+        {
+            // Nothing here
         }
     }
 }

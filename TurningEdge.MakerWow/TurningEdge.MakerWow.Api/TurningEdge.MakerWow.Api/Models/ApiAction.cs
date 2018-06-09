@@ -20,8 +20,10 @@ namespace TurningEdge.MakerWow.Api.Models
 
                 if (!string.IsNullOrEmpty((string)((Dictionary<string, object>)_json.Json["error"])["message"]))
                     return _json.Json["error"].ToError();
-                else
+                else if (!string.IsNullOrEmpty(errorString))
                     return new ApiException(2, errorString);
+                else
+                    return new ApiException(0, string.Empty);
             }
         }
 
@@ -29,8 +31,8 @@ namespace TurningEdge.MakerWow.Api.Models
         {
             get
             {
-                string affectedRowsString = (string)((Dictionary<string, object>)_json.Json["result"])
-                    ["affected_rows"];
+                string affectedRowsString = (string)(((Dictionary<string, object>)_json.Json["result"])
+                    ["affected_rows"].ToString());
                 if (!string.IsNullOrEmpty(affectedRowsString))
                 {
                     return int.Parse(affectedRowsString);
@@ -44,8 +46,8 @@ namespace TurningEdge.MakerWow.Api.Models
         {
             get
             {
-                string lastIdString = (string)((Dictionary<string, object>)_json.Json["result"])
-                    ["last_id"];
+                string lastIdString = (string)(((Dictionary<string, object>)_json.Json["result"])
+                    ["last_id"].ToString());
                 if (!string.IsNullOrEmpty(lastIdString))
                 {
                     return int.Parse(lastIdString);

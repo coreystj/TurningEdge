@@ -7,14 +7,14 @@ using TurningEdge.MakerWow.Api.Repositories.Abstracts;
 
 namespace TurningEdge.MakerWow.Api.Repositories
 {
-    public class WorldLayerRepository : ApiRepository<WorldLayer>
+    public class StockpileRepository : ApiRepository<Stockpile>
     {
         protected override string SetPrimaryData(List<string> primaryKeys)
         {
             primaryKeys.Add("id");
             primaryKeys.Add("user_id");
 
-            return "world_layer";
+            return "stockpile";
         }
     }
 }

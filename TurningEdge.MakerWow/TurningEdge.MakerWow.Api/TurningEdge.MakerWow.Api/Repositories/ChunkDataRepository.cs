@@ -36,6 +36,7 @@ namespace TurningEdge.MakerWow.Api.Repositories
 
         protected override string SetPrimaryData(List<string> primaryKeys)
         {
+            primaryKeys.Add("id");
             primaryKeys.Add("user_id");
             primaryKeys.Add("world_layer_id");
             primaryKeys.Add("x_coordinate");

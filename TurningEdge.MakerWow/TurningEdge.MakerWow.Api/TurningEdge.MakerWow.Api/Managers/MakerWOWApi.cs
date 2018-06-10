@@ -28,6 +28,7 @@ namespace TurningEdge.MakerWow.Api.Managers
 
         private static ChunkDataRepository _chunkDataRepository;
         private static WorldLayerRepository _worldLayerRepository;
+        private static InventoryRepository _inventoryRepository;
 
         public static ChunkDataRepository ChunkDataRepository
         {
@@ -37,7 +38,10 @@ namespace TurningEdge.MakerWow.Api.Managers
         {
             get { return _worldLayerRepository; }
         }
-
+        public static InventoryRepository InventoryRepository
+        {
+            get { return _inventoryRepository; }
+        }
 
         public static RegistrationStatus Status
         {
@@ -99,6 +103,7 @@ namespace TurningEdge.MakerWow.Api.Managers
         {
             _chunkDataRepository = new ChunkDataRepository();
             _worldLayerRepository = new WorldLayerRepository();
+            _inventoryRepository = new InventoryRepository();
         }
 
         public static void Initialize<T>()

@@ -18,7 +18,7 @@ namespace TurningEdge.MakerWow.Api.Factories
 
         public ChunkData Create(WorldLayer worldLayer, int x, int y)
         {
-            ChunkData chunk = new ChunkData(_currentUser.Id, x, y, worldLayer.Id);
+            ChunkData chunk = new ChunkData(0, _currentUser.Id, x, y, worldLayer.Id);
             return chunk;
         }
     }

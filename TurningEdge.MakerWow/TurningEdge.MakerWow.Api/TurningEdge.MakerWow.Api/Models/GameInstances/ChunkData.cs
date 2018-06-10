@@ -10,6 +10,7 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
     public class ChunkData : JsonObject
     {
+        private int _id;
         private int _userId;
         private int _x;
         private int _y;
@@ -18,6 +19,13 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
         private Landscape _landscapeBuffer;
         private Construction _constructionBuffer;
 
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
         public int UserId
         {
             get
@@ -64,13 +72,15 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             }
         }
 
-        public ChunkData(        
+        public ChunkData(     
+            int id,
             int userId,
             int x,
             int y,
             int layerId)
             : base()
         {
+            _id = id;
             _userId = userId;
             _x = x;
             _y = y;
@@ -106,7 +116,8 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
         // override object.GetHashCode
         public override int GetHashCode()
         {
-            return LayerId.GetHashCode() 
+            return Id.GetHashCode() 
+                    ^ LayerId.GetHashCode()
                     ^ UserId.GetHashCode() 
                     ^ X.GetHashCode() 
                     ^ Y.GetHashCode();
@@ -114,6 +125,7 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
         protected override void ParseJson(Dictionary<string, object> record)
         {
+            _id = int.Parse((string)record["id"]);
             _userId = int.Parse((string)record["user_id"]);
             _layerId = int.Parse((string)record["world_layer_id"]);
             _x = int.Parse((string)record["x_coordinate"]);
@@ -128,6 +140,7 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
             record.Append("{");
 
+            record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
             record.Append("\"" + "user_id" + "\"" + " : " + "\"" + _userId + "\"" + ",");
             record.Append("\"" + "world_layer_id" + "\"" + " : " + "\"" + _layerId + "\"" + ",");
             record.Append("\"" + "x_coordinate" + "\"" + " : " + "\"" + _x + "\"" + ",");

@@ -36,8 +36,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\MakerWowEngine.cs" />
+    <Compile Include="DataTypes\Construction.cs" />
+    <Compile Include="DataTypes\CrudTypes.cs" />
+    <Compile Include="DataTypes\Landscape.cs" />
+    <Compile Include="DataTypes\RegistrationStatus.cs" />
+    <Compile Include="Models\Models\GameInstances\ChunkData.cs" />
+    <Compile Include="Models\Models\GameInstances\Inventory.cs" />
+    <Compile Include="Models\Models\GameInstances\Item.cs" />
+    <Compile Include="Models\Models\GameInstances\Skill.cs" />
+    <Compile Include="Models\Models\GameInstances\Slot.cs" />
+    <Compile Include="Models\Models\GameInstances\Stockpile.cs" />
+    <Compile Include="Models\Models\GameInstances\WorldLayer.cs" />
+    <Compile Include="Models\Models\Relationships\RelationshipSkillUser.cs" />
+    <Compile Include="Models\Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
+      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
+      <Name>TurningEdge</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

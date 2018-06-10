@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TurningEdge.Generics.Factories;
-using TurningEdge.MakerWow.Api.DataTypes;
+using TurningEdge.MakerWow.DataTypes;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Helpers;
@@ -11,10 +11,12 @@ using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
 using TurningEdge.MakerWow.Api.Repositories;
 using TurningEdge.MakerWow.Api.Repositories.Abstracts;
+using TurningEdge.MakerWow.Models;
 using TurningEdge.Web.Exceptions;
 using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
+using TurningEdge.MakerWow.Models.GameInstances;
 
 namespace TurningEdge.MakerWow.Api.Managers
 {
@@ -29,6 +31,8 @@ namespace TurningEdge.MakerWow.Api.Managers
         private static ChunkDataRepository _chunkDataRepository;
         private static WorldLayerRepository _worldLayerRepository;
         private static InventoryRepository _inventoryRepository;
+        private static StockpileRepository _stockpileRepository;
+        private static RelationshipSkillUserRepository _relationshipSkillUserRepository;
 
         public static ChunkDataRepository ChunkDataRepository
         {
@@ -41,6 +45,14 @@ namespace TurningEdge.MakerWow.Api.Managers
         public static InventoryRepository InventoryRepository
         {
             get { return _inventoryRepository; }
+        }
+        public static StockpileRepository StockpileRepository
+        {
+            get { return _stockpileRepository; }
+        }
+        public static RelationshipSkillUserRepository RelationshipSkillUserRepository
+        {
+            get { return _relationshipSkillUserRepository; }
         }
 
         public static RegistrationStatus Status
@@ -104,6 +116,8 @@ namespace TurningEdge.MakerWow.Api.Managers
             _chunkDataRepository = new ChunkDataRepository();
             _worldLayerRepository = new WorldLayerRepository();
             _inventoryRepository = new InventoryRepository();
+            _stockpileRepository = new StockpileRepository();
+            _relationshipSkillUserRepository = new RelationshipSkillUserRepository();
         }
 
         public static void Initialize<T>()
@@ -133,7 +147,7 @@ namespace TurningEdge.MakerWow.Api.Managers
 
             DoPostRequest(formData, "account&process=login",
             (IWebRequest result) => {
-                var apiResult = new ApiResult<ChunkData>(result.Json);
+                var apiResult = new ApiResult<ChunkDataJsonObject>(result.Json);
                 if (apiResult.IsError)
                     onLoginFailed(apiResult);
                 else
@@ -154,7 +168,7 @@ namespace TurningEdge.MakerWow.Api.Managers
 
             DoPostRequest(formData, "account&process=logout",
             (IWebRequest result) => {
-                var apiResult = new ApiResult<ChunkData>(result.Json);
+                var apiResult = new ApiResult<ChunkDataJsonObject>(result.Json);
                 if (apiResult.IsError)
                     onLogoutFailed(apiResult);
                 else

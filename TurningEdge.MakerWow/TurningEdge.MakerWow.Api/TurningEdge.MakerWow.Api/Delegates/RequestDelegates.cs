@@ -6,6 +6,8 @@ using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
+using TurningEdge.MakerWow.Api.Models.Interfaces;
+using TurningEdge.MakerWow.Models;
 
 namespace TurningEdge.MakerWow.Api.Delegates
 {
@@ -15,7 +17,7 @@ namespace TurningEdge.MakerWow.Api.Delegates
     public delegate void OnLogoutSuccessAction(ApiContext context);
     public delegate void OnLogoutFailedAction(ApiContext context);
 
-    public delegate void OnGetSuccessAction<T>(T[] worldLayers, ApiResult<T> context) where T : JsonObject;
+    public delegate void OnGetSuccessAction<T>(T[] worldLayers, ApiResult<T> context) where T : class, IJsonObject;
 
     public delegate void OnSuccessAction(ApiAction context);
     public delegate void OnFailedAction(ApiContext context);

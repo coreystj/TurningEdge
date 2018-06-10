@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TurningEdge.MakerWow.Api.Models.GameInstances
+namespace TurningEdge.MakerWow.Models.GameInstances
 {
     public class Stockpile : Inventory
     {
-        public Stockpile(object record) 
-            : base(record)
+        public Stockpile(
+            int id,
+            int userId,
+            int slotCount)
+            : base(id, userId, slotCount)
         {
+        }
+        public Stockpile()
+        {
+
         }
 
         public Stockpile(int id, int userId, string data) 

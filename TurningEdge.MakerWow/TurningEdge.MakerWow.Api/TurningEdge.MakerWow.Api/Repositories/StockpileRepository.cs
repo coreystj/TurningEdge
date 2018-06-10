@@ -7,7 +7,7 @@ using TurningEdge.MakerWow.Api.Repositories.Abstracts;
 
 namespace TurningEdge.MakerWow.Api.Repositories
 {
-    public class StockpileRepository : ApiRepository<Stockpile>
+    public class StockpileRepository : ApiRepository<StockpileJsonObject>
     {
         protected override string SetPrimaryData(List<string> primaryKeys)
         {

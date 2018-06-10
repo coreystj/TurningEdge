@@ -38,10 +38,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTypes\Construction.cs" />
-    <Compile Include="DataTypes\CrudTypes.cs" />
-    <Compile Include="DataTypes\Landscape.cs" />
-    <Compile Include="DataTypes\RegistrationStatus.cs" />
     <Compile Include="Delegates\RequestDelegates.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Factories\ChunkDataFactory.cs" />
@@ -50,22 +46,23 @@
     <Compile Include="Interfaces\IApiRepository.cs" />
     <Compile Include="Managers\MakerWOWApi.cs" />
     <Compile Include="Models\Abstracts\ApiContext.cs" />
-    <Compile Include="Models\Abstracts\JsonObject.cs" />
     <Compile Include="Models\ApiAction.cs" />
     <Compile Include="Models\ApiResult .cs" />
-    <Compile Include="Models\GameInstances\ChunkData.cs" />
+    <Compile Include="Models\GameInstances\ChunkDataJsonObject.cs" />
     <Compile Include="Models\Abstracts\Context.cs" />
-    <Compile Include="Models\GameInstances\Inventory.cs" />
-    <Compile Include="Models\GameInstances\Item.cs" />
-    <Compile Include="Models\Relationships\RelationshipSkillUser.cs" />
-    <Compile Include="Models\GameInstances\Skill.cs" />
-    <Compile Include="Models\GameInstances\Stockpile.cs" />
-    <Compile Include="Models\GameInstances\WorldLayer.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\GameInstances\InventoryJsonObject.cs" />
+    <Compile Include="Models\GameInstances\ItemJsonObject.cs" />
+    <Compile Include="Models\Interfaces\IJsonObject.cs" />
+    <Compile Include="Models\Relationships\RelationshipSkillUserJsonObject.cs" />
+    <Compile Include="Models\GameInstances\SkillJsonObject.cs" />
+    <Compile Include="Models\GameInstances\StockpileJsonObject.cs" />
+    <Compile Include="Models\GameInstances\WorldLayerJsonObject.cs" />
+    <Compile Include="Models\UserJsonObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstracts\ApiRepository.cs" />
     <Compile Include="Repositories\ChunkDataRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
+    <Compile Include="Repositories\RelationshipSkillUserRepository.cs" />
     <Compile Include="Repositories\SkillRepository.cs" />
     <Compile Include="Repositories\StockpileRepository.cs" />
     <Compile Include="Repositories\WorldLayerRepository.cs" />
@@ -78,6 +75,10 @@
     <ProjectReference Include="..\..\..\TurningEdge\TurningEdge.csproj">
       <Project>{E6869595-840E-4734-A4DC-9E125DC34DCC}</Project>
       <Name>TurningEdge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TurningEdge.MakerWow\TurningEdge.MakerWow.csproj">
+      <Project>{f2462cc9-dc3c-4894-8e1a-dc69b66cb8cd}</Project>
+      <Name>TurningEdge.MakerWow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

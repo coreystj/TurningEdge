@@ -7,12 +7,13 @@ using System.Text;
 using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Helpers;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
+using TurningEdge.MakerWow.Api.Models.Interfaces;
 using TurningEdge.Web.Models;
 
 namespace TurningEdge.MakerWow.Api.Models
 {
     public class ApiResult<T> : ApiContext
-        where T : JsonObject
+        where T : class, IJsonObject
     {
         public override ApiException Error
         {

@@ -10,7 +10,10 @@ using TurningEdge.MakerWow.Api.Managers;
 using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
+using TurningEdge.MakerWow.Api.Models.Relationships;
 using TurningEdge.MakerWow.Api.Windows;
+using TurningEdge.MakerWow.Models;
+using TurningEdge.MakerWow.Models.Relationships;
 using TurningEdge.Web.Exceptions;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
@@ -31,12 +34,25 @@ namespace TurningEdge.MakerWow.Api.Pipeline
 
         private static void onLoginSuccess(User user, ApiContext context)
         {
+            var relationshipSkillUser1 = new RelationshipSkillUserJsonObject(MakerWOWApi.Id, 1, 0);
+            MakerWOWApi.RelationshipSkillUserRepository.Create(relationshipSkillUser1, onCreateSuccessAction, OnCrudFailed);
+
+            var relationshipSkillUser2 = new RelationshipSkillUserJsonObject(MakerWOWApi.Id, 2, 0);
+            MakerWOWApi.RelationshipSkillUserRepository.Create(relationshipSkillUser2, onCreateSuccessAction, OnCrudFailed);
+
+            var relationshipSkillUser3 = new RelationshipSkillUserJsonObject(MakerWOWApi.Id, 3, 0);
+            MakerWOWApi.RelationshipSkillUserRepository.Create(relationshipSkillUser3, onCreateSuccessAction, OnCrudFailed);
+        }
+
+        private static void onCreateSuccessAction(ApiAction context)
+        {
             MakerWOWApi.InventoryRepository.Read(onReadSuccessAction, OnCrudFailed);
         }
 
-        private static void onReadSuccessAction(Inventory[] worldLayers, ApiResult<Inventory> context)
+        private static void onReadSuccessAction(InventoryJsonObject[] worldLayers, ApiResult<InventoryJsonObject> context)
         {
-            throw new NotImplementedException();
+            var stockpile = new StockpileJsonObject(0, MakerWOWApi.Id, 500);
+            MakerWOWApi.StockpileRepository.Create(stockpile, onCreateSuccessAction, OnCrudFailed);
         }
 
         private static void MakerWOWApi_OnError(ApiException exception)

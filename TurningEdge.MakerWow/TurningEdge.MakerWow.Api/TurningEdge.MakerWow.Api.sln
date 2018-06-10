@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking", "..\..\TurningEdge.Networking\TurningEdge.Networking\TurningEdge.Networking.csproj", "{59B3DF82-90E5-4F50-B125-BA396BADE926}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.Pipeline", "..\..\TurningEdge.Networking\TurningEdge.Networking.Pipeline\TurningEdge.Networking.Pipeline.csproj", "{ACEC3388-378B-4926-BD01-0047E506ADB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59B3DF82-90E5-4F50-B125-BA396BADE926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

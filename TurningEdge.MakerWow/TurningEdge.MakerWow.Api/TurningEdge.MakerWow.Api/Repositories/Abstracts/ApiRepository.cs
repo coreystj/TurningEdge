@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using TurningEdge.Generics.Interfaces;
 using TurningEdge.Helpers;
-using TurningEdge.MakerWow.Api.DataTypes;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Helpers;
@@ -13,6 +12,8 @@ using TurningEdge.MakerWow.Api.Managers;
 using TurningEdge.MakerWow.Api.Models;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
+using TurningEdge.MakerWow.Api.Models.Interfaces;
+using TurningEdge.MakerWow.DataTypes;
 using TurningEdge.Web.Exceptions;
 using TurningEdge.Web.Helpers;
 using TurningEdge.Web.WebResult.Interfaces;
@@ -20,7 +21,7 @@ using TurningEdge.Web.WebResult.Interfaces;
 namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
 {
     public abstract class ApiRepository<T> : IApiRepository<T>
-        where T : JsonObject
+        where T : class, IJsonObject
     {
         protected HashSet<T> _models;
         protected string _tableName;
@@ -53,6 +54,12 @@ namespace TurningEdge.MakerWow.Api.Repositories.Abstracts
         }
 
         protected abstract string SetPrimaryData(List<string> primaryKeys);
+
+        public void Create(T model, OnSuccessAction onCreateSuccessAction,
+            OnFailedAction onCreateFailedAction)
+        {
+            Create(new T[] { model }, onCreateSuccessAction, onCreateFailedAction);
+        }
 
         public void Create(T[] models, OnSuccessAction onCreateSuccessAction, 
             OnFailedAction onCreateFailedAction)

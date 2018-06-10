@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
+using TurningEdge.MakerWow.Api.Models.Interfaces;
 
 namespace TurningEdge.MakerWow.Api.Interfaces
 {
     public interface IApiRepository<T>
-        where T : JsonObject
+        where T : class, IJsonObject
     {
         void Create(T[] models, OnSuccessAction  onCreateSuccessAction, OnFailedAction onCreateFailedAction);
         void Read  (OnGetSuccessAction<T> onReadSuccessAction, OnFailedAction onReadFailedAction, Dictionary<string, string> filter = null);

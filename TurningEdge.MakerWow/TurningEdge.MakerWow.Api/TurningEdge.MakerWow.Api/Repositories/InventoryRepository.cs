@@ -8,7 +8,7 @@ using TurningEdge.MakerWow.Api.Repositories.Abstracts;
 
 namespace TurningEdge.MakerWow.Api.Repositories
 {
-    public class InventoryRepository : ApiRepository<Inventory>
+    public class InventoryRepository : ApiRepository<InventoryJsonObject>
     {
         protected override string SetPrimaryData(List<string> primaryKeys)
         {

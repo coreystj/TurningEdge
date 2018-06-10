@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using TurningEdge.MakerWow.Api.Delegates;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
+using TurningEdge.MakerWow.Api.Models.Interfaces;
 using TurningEdge.MakerWow.Api.Repositories.Abstracts;
+using TurningEdge.MakerWow.Models.GameInstances;
 
 namespace TurningEdge.MakerWow.Api.Repositories
 {
-    public class ChunkDataRepository : ApiRepository<ChunkData>
+    public class ChunkDataRepository : ApiRepository<ChunkDataJsonObject>
     {
+        public ChunkDataRepository()
+        {
+        }
+
         public void Read(int layerId, int x, int y, 
-            OnGetSuccessAction<ChunkData> onReadSuccessAction,
+            OnGetSuccessAction<ChunkDataJsonObject> onReadSuccessAction,
             OnFailedAction onReadFailedAction)
         {
             var filter = new Dictionary<string, string>();
@@ -24,7 +30,7 @@ namespace TurningEdge.MakerWow.Api.Repositories
         }
 
         public void Read(int layerId, 
-            OnGetSuccessAction<ChunkData> onReadSuccessAction,
+            OnGetSuccessAction<ChunkDataJsonObject> onReadSuccessAction,
             OnFailedAction onReadFailedAction)
         {
             var filter = new Dictionary<string, string>();

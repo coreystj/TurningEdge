@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using TurningEdge.MakerWow.Api.Exceptions;
 using TurningEdge.MakerWow.Api.Helpers;
+using TurningEdge.MakerWow.Models;
 using TurningEdge.Web.Models;
 
 namespace TurningEdge.MakerWow.Api.Models.Abstracts
@@ -76,7 +77,7 @@ namespace TurningEdge.MakerWow.Api.Models.Abstracts
         {
             get
             {
-                return _json.Json["user"].ParseSingle<User>();
+                return _json.Json["user"].ParseSingle<UserJsonObject>();
             }
         }
 

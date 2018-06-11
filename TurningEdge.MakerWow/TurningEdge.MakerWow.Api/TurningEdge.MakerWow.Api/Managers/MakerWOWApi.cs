@@ -17,6 +17,7 @@ using TurningEdge.Web.WebContext.Delegates;
 using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
 using TurningEdge.MakerWow.Models.GameInstances;
+using TurningEdge.Networking.Models.Concretes;
 
 namespace TurningEdge.MakerWow.Api.Managers
 {
@@ -138,7 +139,7 @@ namespace TurningEdge.MakerWow.Api.Managers
             _webContext = webContext;
         }
 
-        public static void Login(string username, string password, 
+        public static void Login(SessionCommand sessionCommand, string username, string password, 
             OnLoginSuccessAction onLoginSuccess, OnLoginFailedAction onLoginFailed)
         {
             var formData = new Dictionary<string, string>();
@@ -149,12 +150,12 @@ namespace TurningEdge.MakerWow.Api.Managers
             (IWebRequest result) => {
                 var apiResult = new ApiResult<ChunkDataJsonObject>(result.Json);
                 if (apiResult.IsError)
-                    onLoginFailed(apiResult);
+                    onLoginFailed(sessionCommand, apiResult);
                 else
                 {
                     var user = apiResult.CurrentUser;
                     _user = user;
-                    onLoginSuccess(_user, apiResult);
+                    onLoginSuccess(sessionCommand, _user, apiResult);
                 }
             },
             (WebContextException error) => {
@@ -162,7 +163,8 @@ namespace TurningEdge.MakerWow.Api.Managers
             });
         }
 
-        public static void Logout(OnLogoutSuccessAction onLogoutSuccess, OnLogoutFailedAction onLogoutFailed)
+        public static void Logout(SessionCommand sessionCommand, 
+            OnLogoutSuccessAction onLogoutSuccess, OnLogoutFailedAction onLogoutFailed)
         {
             var formData = new Dictionary<string, string>();
 
@@ -170,11 +172,11 @@ namespace TurningEdge.MakerWow.Api.Managers
             (IWebRequest result) => {
                 var apiResult = new ApiResult<ChunkDataJsonObject>(result.Json);
                 if (apiResult.IsError)
-                    onLogoutFailed(apiResult);
+                    onLogoutFailed(sessionCommand, apiResult);
                 else
                 {
                     _user = null;
-                    onLogoutSuccess(apiResult);
+                    onLogoutSuccess(sessionCommand, apiResult);
                 }
             },
             (WebContextException error) => {

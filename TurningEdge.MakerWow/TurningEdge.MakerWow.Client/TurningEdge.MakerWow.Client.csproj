@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F2462CC9-DC3C-4894-8E1A-DC69B66CB8CD}</ProjectGuid>
+    <ProjectGuid>{794A4F10-1F14-4F77-8306-442409EBF1AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TurningEdge.MakerWow</RootNamespace>
-    <AssemblyName>TurningEdge.MakerWow</AssemblyName>
+    <RootNamespace>TurningEdge.MakerWow.Client</RootNamespace>
+    <AssemblyName>TurningEdge.MakerWow.Client</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,32 +31,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concretes\CommandAgent.cs" />
-    <Compile Include="Controllers\NetworkController.cs" />
-    <Compile Include="DataTypes\CommandTypes.cs" />
-    <Compile Include="DataTypes\Construction.cs" />
-    <Compile Include="DataTypes\CrudTypes.cs" />
-    <Compile Include="DataTypes\EditorCommands.cs" />
-    <Compile Include="DataTypes\Landscape.cs" />
-    <Compile Include="DataTypes\RegistrationStatus.cs" />
-    <Compile Include="DataTypes\WorldCommands.cs" />
-    <Compile Include="Interfaces\ICommandable.cs" />
-    <Compile Include="Interfaces\IEnginable.cs" />
-    <Compile Include="Models\Command.cs" />
-    <Compile Include="Models\GameInstances\ChunkData.cs" />
-    <Compile Include="Models\GameInstances\Inventory.cs" />
-    <Compile Include="Models\GameInstances\Item.cs" />
-    <Compile Include="Models\GameInstances\Skill.cs" />
-    <Compile Include="Models\GameInstances\Slot.cs" />
-    <Compile Include="Models\GameInstances\Stockpile.cs" />
-    <Compile Include="Models\GameInstances\WorldLayer.cs" />
-    <Compile Include="Models\Relationships\RelationshipSkillUser.cs" />
-    <Compile Include="Models\SessionCommand.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ClientEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,13 +50,10 @@
       <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.MakerWow\TurningEdge.MakerWow.csproj">
+      <Project>{F2462CC9-DC3C-4894-8E1A-DC69B66CB8CD}</Project>
+      <Name>TurningEdge.MakerWow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

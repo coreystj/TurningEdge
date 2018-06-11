@@ -5,7 +5,8 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Models.Relationships
 {
-    public class RelationshipSkillUser
+    [Serializable]
+    public class RelationshipSkillUser : ICloneable
     {
         protected int _userId;
         protected int _skillId;
@@ -61,6 +62,12 @@ namespace TurningEdge.MakerWow.Models.Relationships
             return UserId.GetHashCode()
                     ^ SkillId.GetHashCode();
         }
-        
+
+        public object Clone()
+        {
+            return new RelationshipSkillUser(_userId,
+                _skillId,
+                _experience);
+        }
     }
 }

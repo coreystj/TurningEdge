@@ -8,6 +8,7 @@ using TurningEdge.MakerWow.Models.GameInstances;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
+    [Serializable]
     public class WorldLayerJsonObject : WorldLayer, IJsonObject
     {
         public WorldLayerJsonObject(object record) 
@@ -39,5 +40,6 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
             return record.ToString();
         }
+        
     }
 }

@@ -11,6 +11,7 @@ using TurningEdge.MakerWow.Models;
 
 namespace TurningEdge.MakerWow.Api.Models
 {
+    [Serializable]
     public class UserJsonObject : User, IJsonObject
     {
         public UserJsonObject(int id, string fName, string lName, string email, DateTime registerDate, RegistrationStatus status)
@@ -51,5 +52,6 @@ namespace TurningEdge.MakerWow.Api.Models
 
             return record.ToString();
         }
+        
     }
 }

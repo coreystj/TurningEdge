@@ -5,22 +5,16 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Models.GameInstances
 {
-    public class WorldLayer
+    [Serializable]
+    public class Skill : ICloneable
     {
         protected int _id;
-        protected int _userId;
         protected string _name;
         protected string _description;
-        protected int _environmentId;
 
         public int Id
         {
             get { return _id; }
-        }
-
-        public int UserId
-        {
-            get { return _userId; }
         }
 
         public string Name
@@ -32,30 +26,20 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         {
             get { return _description; }
         }
-
-        public int EnvironmentId
-        {
-            get { return _environmentId; }
-        }
-
-        public WorldLayer()
+        public Skill()
         {
 
         }
 
-        public WorldLayer(        
+        public Skill(
             int id,
-            int userId,
             string name,
-            string description,
-            int environmentId)
+            string description)
             : base()
         {
             _id = id;
-            _userId = userId;
             _name = name;
             _description = description;
-            _environmentId = environmentId;
         }
 
         // override object.Equals
@@ -66,7 +50,7 @@ namespace TurningEdge.MakerWow.Models.GameInstances
                 return false;
             }
 
-            var model = obj as WorldLayer;
+            var model = obj as Skill;
 
             return (model.GetHashCode() == GetHashCode());
         }
@@ -74,8 +58,14 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         // override object.GetHashCode
         public override int GetHashCode()
         {
-            return Id.GetHashCode()
-                    ^ UserId.GetHashCode();
+            return Id.GetHashCode();
+        }
+
+        public object Clone()
+        {
+            return new Skill(_id,
+                _name,
+                _description);
         }
     }
 }

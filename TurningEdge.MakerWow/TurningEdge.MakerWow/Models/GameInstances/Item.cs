@@ -5,7 +5,8 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Models.GameInstances
 {
-    public class Item
+    [Serializable]
+    public class Item : ICloneable
     {
         protected int _id;
         protected string _name;
@@ -76,6 +77,15 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         {
             return Id.GetHashCode();
         }
-        
+
+        public object Clone()
+        {
+            return new Item(_id,
+                _name,
+                _description,
+                _icon,
+                _model);
+        }
+
     }
 }

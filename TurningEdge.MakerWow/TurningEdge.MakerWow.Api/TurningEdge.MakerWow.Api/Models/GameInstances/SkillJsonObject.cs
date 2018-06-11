@@ -8,6 +8,7 @@ using TurningEdge.MakerWow.Models.GameInstances;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
+    [Serializable]
     public class SkillJsonObject : Skill, IJsonObject
     {
         public SkillJsonObject(object record)
@@ -40,5 +41,6 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
             return record.ToString();
         }
+        
     }
 }

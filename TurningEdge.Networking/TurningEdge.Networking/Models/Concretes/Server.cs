@@ -6,9 +6,11 @@ namespace TurningEdge.Networking.Models.Concretes
     public class Server<T> : NetworkInfo<T>
         where T : Session
     {
+
         public Server(string ipAddress, int port) 
             : base(ipAddress, port)
         {
+            //OnConnected += Server_OnConnected;
         }
 
         public override void Connect()

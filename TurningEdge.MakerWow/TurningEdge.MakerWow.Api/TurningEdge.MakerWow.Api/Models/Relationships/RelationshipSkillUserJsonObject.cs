@@ -8,6 +8,7 @@ using TurningEdge.MakerWow.Models.Relationships;
 
 namespace TurningEdge.MakerWow.Api.Models.Relationships
 {
+    [Serializable]
     public class RelationshipSkillUserJsonObject : RelationshipSkillUser, IJsonObject
     {
 
@@ -41,5 +42,6 @@ namespace TurningEdge.MakerWow.Api.Models.Relationships
 
             return record.ToString();
         }
+        
     }
 }

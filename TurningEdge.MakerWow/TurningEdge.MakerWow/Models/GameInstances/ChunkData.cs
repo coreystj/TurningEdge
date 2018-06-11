@@ -7,7 +7,8 @@ using TurningEdge.Serializing;
 
 namespace TurningEdge.MakerWow.Models.GameInstances
 {
-    public class ChunkData
+    [Serializable]
+    public class ChunkData : ICloneable
     {
         protected int _id;
         protected int _userId;
@@ -76,6 +77,27 @@ namespace TurningEdge.MakerWow.Models.GameInstances
 
         }
 
+        public ChunkData(
+            int id,
+            int userId,
+            int x,
+            int y,
+            int layerId,
+            Landscape landscape,
+            Construction construction
+            )
+            : base()
+        {
+            _id = id;
+            _userId = userId;
+            _x = x;
+            _y = y;
+            _layerId = layerId;
+
+            _landscapeBuffer = landscape;
+            _constructionBuffer = construction;
+        }
+
         public ChunkData(     
             int id,
             int userId,
@@ -115,6 +137,18 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+
+        public object Clone()
+        {
+            return new ChunkData(
+                _id,
+                _userId,
+                _x,
+                _y,
+                _layerId,
+                _landscapeBuffer,
+                _constructionBuffer);
         }
     }
 }

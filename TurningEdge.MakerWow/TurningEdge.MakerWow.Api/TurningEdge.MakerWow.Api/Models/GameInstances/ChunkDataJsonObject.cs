@@ -10,6 +10,7 @@ using TurningEdge.Serializing;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
+    [Serializable]
     public class ChunkDataJsonObject : ChunkData, IJsonObject
     {
         public ChunkDataJsonObject(int id, int userId, int x, int y, int layerId) 

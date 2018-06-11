@@ -7,7 +7,8 @@ using TurningEdge.MakerWow.DataTypes;
 
 namespace TurningEdge.MakerWow.Models
 {
-    public class User
+    [Serializable]
+    public class User : ICloneable
     {
         protected int _id;
         protected string _fName;
@@ -97,6 +98,16 @@ namespace TurningEdge.MakerWow.Models
         public override int GetHashCode()
         {
             return Email.GetHashCode();
+        }
+
+        public object Clone()
+        {
+            return new User(_id,
+                _fName,
+                _lName,
+                _email,
+                _registerDate,
+                _status);
         }
     }
 }

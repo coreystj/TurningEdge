@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9CFE6817-AE7E-4EE9-A5E5-7F0B15A10FFB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TurningEdge.MakerWow.Client.Pipeline</RootNamespace>
+    <AssemblyName>TurningEdge.MakerWow.Client.Pipeline</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TurningEdge.Networking\TurningEdge.Networking.WindowsSocket\TurningEdge.Networking.WindowsSocket.csproj">
+      <Project>{B79A86EB-2E4D-4837-9A5B-D41C114BAB81}</Project>
+      <Name>TurningEdge.Networking.WindowsSocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TurningEdge.Networking\TurningEdge.Networking\TurningEdge.Networking.csproj">
+      <Project>{59B3DF82-90E5-4F50-B125-BA396BADE926}</Project>
+      <Name>TurningEdge.Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TurningEdge.Web\TurningEdge.Web.Windows\TurningEdge.Web.Windows.csproj">
+      <Project>{65853F8C-789F-4119-AB7F-6243B55FF8D0}</Project>
+      <Name>TurningEdge.Web.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TurningEdge.Web\TurningEdge.Web\TurningEdge.Web.csproj">
+      <Project>{99FF16F8-6F2E-4145-92AC-849CEA177E15}</Project>
+      <Name>TurningEdge.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.MakerWow.Api\TurningEdge.MakerWow.Api\TurningEdge.MakerWow.Api.csproj">
+      <Project>{84EA5522-E8FC-4E74-8CDD-25565FEF6CA0}</Project>
+      <Name>TurningEdge.MakerWow.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.MakerWow.Client\TurningEdge.MakerWow.Client.csproj">
+      <Project>{794A4F10-1F14-4F77-8306-442409EBF1AA}</Project>
+      <Name>TurningEdge.MakerWow.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TurningEdge.MakerWow\TurningEdge.MakerWow.csproj">
+      <Project>{F2462CC9-DC3C-4894-8E1A-DC69B66CB8CD}</Project>
+      <Name>TurningEdge.MakerWow</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -23,6 +23,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Networking.Pipeline", "..\..\TurningEdge.Networking\TurningEdge.Networking.Pipeline\TurningEdge.Networking.Pipeline.csproj", "{ACEC3388-378B-4926-BD01-0047E506ADB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.MakerWow.Server", "..\TurningEdge.MakerWow.Server\TurningEdge.MakerWow.Server.csproj", "{6C44B499-AD21-40F6-BB3E-61CDC95CABB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.MakerWow.Server.Pipeline", "..\TurningEdge.MakerWow.Server.Pipeline\TurningEdge.MakerWow.Server.Pipeline.csproj", "{94DEEC79-5D70-4ADA-AA2F-99B86958E737}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.MakerWow.Client", "..\TurningEdge.MakerWow.Client\TurningEdge.MakerWow.Client.csproj", "{794A4F10-1F14-4F77-8306-442409EBF1AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +75,18 @@ Global
 		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACEC3388-378B-4926-BD01-0047E506ADB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C44B499-AD21-40F6-BB3E-61CDC95CABB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C44B499-AD21-40F6-BB3E-61CDC95CABB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C44B499-AD21-40F6-BB3E-61CDC95CABB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C44B499-AD21-40F6-BB3E-61CDC95CABB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DEEC79-5D70-4ADA-AA2F-99B86958E737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DEEC79-5D70-4ADA-AA2F-99B86958E737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DEEC79-5D70-4ADA-AA2F-99B86958E737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DEEC79-5D70-4ADA-AA2F-99B86958E737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{794A4F10-1F14-4F77-8306-442409EBF1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{794A4F10-1F14-4F77-8306-442409EBF1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{794A4F10-1F14-4F77-8306-442409EBF1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{794A4F10-1F14-4F77-8306-442409EBF1AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

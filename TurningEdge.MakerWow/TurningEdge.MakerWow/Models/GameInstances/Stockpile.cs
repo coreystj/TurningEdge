@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Models.GameInstances
 {
+    [Serializable]
     public class Stockpile : Inventory
     {
         public Stockpile(
@@ -24,6 +25,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         {
         }
 
+        public Stockpile(int id, int userId, Slot[] slots) 
+            : base(id, userId, slots)
+        {
+        }
+
         // override object.Equals
         public new bool Equals(object obj)
         {
@@ -35,6 +41,13 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             var model = obj as Stockpile;
 
             return (model.GetHashCode() == GetHashCode());
+        }
+
+        public new object Clone()
+        {
+            return new Stockpile(_id,
+                _userId,
+                _slots);
         }
     }
 }

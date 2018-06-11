@@ -8,14 +8,15 @@ using TurningEdge.MakerWow.Api.Models.Abstracts;
 using TurningEdge.MakerWow.Api.Models.GameInstances;
 using TurningEdge.MakerWow.Api.Models.Interfaces;
 using TurningEdge.MakerWow.Models;
+using TurningEdge.Networking.Models.Concretes;
 
 namespace TurningEdge.MakerWow.Api.Delegates
 {
-    public delegate void OnLoginSuccessAction(User user, ApiContext context);
-    public delegate void OnLoginFailedAction(ApiContext context);
+    public delegate void OnLoginSuccessAction(SessionCommand sessionCommand, User user, ApiContext context);
+    public delegate void OnLoginFailedAction(SessionCommand sessionCommand, ApiContext context);
 
-    public delegate void OnLogoutSuccessAction(ApiContext context);
-    public delegate void OnLogoutFailedAction(ApiContext context);
+    public delegate void OnLogoutSuccessAction(SessionCommand sessionCommand, ApiContext context);
+    public delegate void OnLogoutFailedAction(SessionCommand sessionCommand, ApiContext context);
 
     public delegate void OnGetSuccessAction<T>(T[] worldLayers, ApiResult<T> context) where T : class, IJsonObject;
 

@@ -8,6 +8,7 @@ namespace TurningEdge.Networking.Models.Concretes
 {
     public abstract class Session
     {
+        protected Guid _id;
         protected Queue<Packet> _messages;
         public event OnListeningAction OnListening = delegate { };
         public event OnConnectionAttemptAction OnConnectionAttempt = delegate { };
@@ -76,8 +77,17 @@ namespace TurningEdge.Networking.Models.Concretes
             }
         }
 
+        public Guid Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
+
         public Session()
         {
+            _id = Guid.NewGuid();
             _messages = new Queue<Packet>();
             _inBuffer = new byte[BUFFER_SIZE];
             _outBuffer = new byte[BUFFER_SIZE];
@@ -198,6 +208,32 @@ namespace TurningEdge.Networking.Models.Concretes
         public override string ToString()
         {
             return Address;
+        }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //       
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237  
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Session other = obj as Session;
+
+            return other.GetHashCode() == GetHashCode();
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return _id.GetHashCode();
         }
     }
 }

@@ -10,6 +10,7 @@ using TurningEdge.Serializing;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
+    [Serializable]
     public class InventoryJsonObject : Inventory, IJsonObject
     {
         public InventoryJsonObject(int id, int userId, int slotCount) 
@@ -48,5 +49,6 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
             return record.ToString();
         }
+        
     }
 }

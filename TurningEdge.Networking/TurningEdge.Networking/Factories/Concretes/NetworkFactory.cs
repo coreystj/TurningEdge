@@ -7,6 +7,14 @@ namespace TurningEdge.Networking.Factories.Abstracts
 {
     public static class NetworkFactory
     {
+        public static NetworkInfo<T> CreateNetworker<T, W>(string ipAddress, int port)
+            where T : Session
+            where W : NetworkInfo<T>
+        {
+            var networkInfo = Create<W>(ipAddress, port);
+            return networkInfo as W;
+        }
+
         public static NetworkInfo<T> CreateServer<T>(string ipAddress, int port)
             where T : Session
         {

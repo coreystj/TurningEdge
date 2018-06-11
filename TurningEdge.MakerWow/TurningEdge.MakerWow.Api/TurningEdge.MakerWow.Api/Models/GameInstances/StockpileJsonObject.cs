@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
+    [Serializable]
     public class StockpileJsonObject : InventoryJsonObject
     {
         public StockpileJsonObject(object record) 

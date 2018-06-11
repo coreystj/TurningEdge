@@ -10,6 +10,12 @@ namespace TurningEdge.Debugging
     public static class Debugger
     {
         public static string OUTPUT_FILENAME = "Logs.txt";
+        private static object _lock;
+
+        static Debugger()
+        {
+            _lock = new object();
+        }
 
         public static void Print(params object[] objects)
         {
@@ -44,13 +50,21 @@ namespace TurningEdge.Debugging
 
         private static void Log(LogLevel logLevel, string text)
         {
-            string result = string.Empty;
-
-            result = string.Format("{0}: {1}: {2}", logLevel, DateTime.Now, text);
-            Console.WriteLine(text);
-            using (StreamWriter w = File.AppendText(OUTPUT_FILENAME))
+            lock (_lock)
             {
-                w.WriteLine(result);
+                try
+                {
+                    string result = string.Empty;
+
+                    result = string.Format("{0}: {1}: {2}", logLevel, DateTime.Now, text);
+                    Console.WriteLine(text);
+                    using (StreamWriter w = File.AppendText(OUTPUT_FILENAME))
+                    {
+                        w.WriteLine(result);
+                    }
+                }
+                catch (Exception)
+                { }
             }
         }
     }

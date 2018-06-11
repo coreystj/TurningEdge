@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TurningEdge.Serializers;
-using TurningEdge.Serializing;
 
 namespace TurningEdge.MakerWow.Models.GameInstances
 {
-    public class Inventory
+    [Serializable]
+    public class WorldLayer : ICloneable
     {
         protected int _id;
         protected int _userId;
-        protected string _data;
-
-        protected Slot[] _slots;
+        protected string _name;
+        protected string _description;
+        protected int _environmentId;
 
         public int Id
         {
@@ -25,42 +24,39 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             get { return _userId; }
         }
 
-        public string Data
+        public string Name
         {
-            get { return _data; }
+            get { return _name; }
         }
 
-        public Slot[] Slots
+        public string Description
         {
-            get { return _slots; }
+            get { return _description; }
         }
-        public Inventory()
+
+        public int EnvironmentId
+        {
+            get { return _environmentId; }
+        }
+
+        public WorldLayer()
         {
 
         }
 
-        public Inventory(
+        public WorldLayer(        
             int id,
             int userId,
-            int slotCount)
+            string name,
+            string description,
+            int environmentId)
             : base()
         {
             _id = id;
             _userId = userId;
-            _slots = new Slot[slotCount];
-            _data = _slots.ToBytes().Encode();
-        }
-
-        public Inventory(
-            int id,
-            int userId,
-            string data)
-            : base()
-        {
-            _id = id;
-            _userId = userId;
-            _data = data;
-            _slots = _data.Decode().ToObject<Slot[]>();
+            _name = name;
+            _description = description;
+            _environmentId = environmentId;
         }
 
         // override object.Equals
@@ -71,7 +67,7 @@ namespace TurningEdge.MakerWow.Models.GameInstances
                 return false;
             }
 
-            var model = obj as Inventory;
+            var model = obj as WorldLayer;
 
             return (model.GetHashCode() == GetHashCode());
         }
@@ -81,6 +77,15 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         {
             return Id.GetHashCode()
                     ^ UserId.GetHashCode();
+        }
+
+        public object Clone()
+        {
+            return new WorldLayer(_id,
+                _userId,
+                _name,
+                _description,
+                _environmentId);
         }
     }
 }

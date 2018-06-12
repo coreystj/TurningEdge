@@ -47,6 +47,28 @@ namespace TurningEdge.Modeling.Common.Graphics.Structs
             _a = a;
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Color other = (Color)obj;
+            return other.GetHashCode() == GetHashCode();
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return R.GetHashCode() 
+                ^ G.GetHashCode() 
+                ^ B.GetHashCode() 
+                ^ A.GetHashCode();
+        }
+
         public override string ToString()
         {
             return "Color{" 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TurningEdge.ImageLib.Models.Images.Delegates;
+using TurningEdge.Modeling.Common.Graphics.Structs;
 
 namespace TurningEdge.ImageLib.Models.Images.Interfaces
 {
@@ -20,6 +20,7 @@ namespace TurningEdge.ImageLib.Models.Images.Interfaces
         string Path { get; }
         IImage Load(string path);
         void Save(string path);
-
+        void SetPixel(int v1, int v2, Color color);
+        Color GetPixel(int v1, int v2);
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TurningEdge.ImageLib.Models.Images.DataTypes;
 using TurningEdge.ImageLib.Models.Images.Interfaces;
 
@@ -69,6 +68,11 @@ namespace TurningEdge.ImageLib.Models.Images.Abstracts
             _type = otherImage._type;
         }
 
+        public SystemImage(string path) 
+            : base(path)
+        {
+        }
+
         public override IImage Load(string path)
         {
             FireOnImageLoad();
@@ -87,6 +91,27 @@ namespace TurningEdge.ImageLib.Models.Images.Abstracts
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override Modeling.Common.Graphics.Structs.Color GetPixel(int x, int y)
+        {
+            System.Drawing.Color color;
+            Bitmap bitmap = RawImage as Bitmap;
+            if (x < 0 || y < 0 || x > Width - 1 || y > Height - 1)
+                color = Color.FromArgb(0,0,0,1);
+            else
+                color = bitmap.GetPixel(x, y);
+            return new Modeling.Common.Graphics.Structs.Color(color.R, color.G, color.B, color.A);
+        }
+
+        public override void SetPixel(int x, int y, Modeling.Common.Graphics.Structs.Color color)
+        {
+            Bitmap bitmap = RawImage as Bitmap;
+            bitmap.SetPixel(x, y, System.Drawing.Color.FromArgb(
+                (int)(color.A * 255),
+                (int)(color.R * 255),
+                (int)(color.G * 255),
+                (int)(color.B * 255)));
         }
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TurningEdge.Generics.Abstracts;
 using TurningEdge.ImageLib.Models.Images.Delegates;
 using TurningEdge.ImageLib.Models.Images.Interfaces;
+using TurningEdge.Modeling.Common.Graphics.Structs;
 
 namespace TurningEdge.ImageLib.Models.Images.Abstracts
 {
@@ -70,5 +70,9 @@ namespace TurningEdge.ImageLib.Models.Images.Abstracts
                 "path: " + _path + ", " +
                 base.ToString();
         }
+
+        public abstract void SetPixel(int v1, int v2, Modeling.Common.Graphics.Structs.Color color);
+
+        public abstract Modeling.Common.Graphics.Structs.Color GetPixel(int v1, int v2);
     }
 }

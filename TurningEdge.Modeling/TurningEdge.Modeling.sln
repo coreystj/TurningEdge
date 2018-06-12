@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling", "TurningEdge.Modeling\TurningEdge.Modeling.csproj", "{7E87F038-DE96-4E68-AB18-DCF6728F661F}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Controllers", "TurningEdge.Modeling.Controllers\TurningEdge.Modeling.Controllers.csproj", "{3FAAC1AA-01CF-4C7C-B726-4C060CF1BF7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge.Modeling.Pipeline", "TurningEdge.Modeling.Pipeline\TurningEdge.Modeling.Pipeline.csproj", "{4F3C52FF-9C41-4467-8E2B-14C61242431B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{568FA55F-8F1D-49A3-9A42-9A20D7CBF786}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningEdge", "..\TurningEdge\TurningEdge.csproj", "{E6869595-840E-4734-A4DC-9E125DC34DCC}"
 EndProject
@@ -57,8 +55,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E6869595-840E-4734-A4DC-9E125DC34DCC} = {568FA55F-8F1D-49A3-9A42-9A20D7CBF786}
-		{DADB40B4-0DC0-46CD-839C-94C08F53716F} = {568FA55F-8F1D-49A3-9A42-9A20D7CBF786}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B48E379-C142-4603-806F-0887CDB769CB}
 	EndGlobalSection
 EndGlobal

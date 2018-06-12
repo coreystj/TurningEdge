@@ -44,7 +44,7 @@ namespace TurningEdge.Modeling.Pipeline
             // Begin timing.
             stopwatch.Start();
             Console.WriteLine("Saving: " + meshOutput);
-            string outputPath = reader.Write(meshOutput, @"E:\DotNET\TurningEdge\TurningEdge.Modeling\TurningEdge.Modeling.Pipeline\bin\Debug");
+            string outputPath = reader.Write(meshOutput, @"C:\Users\Corey\Desktop\Models");
             Console.WriteLine("Saved mesh to: " + outputPath);
             stopwatch.Stop();
 

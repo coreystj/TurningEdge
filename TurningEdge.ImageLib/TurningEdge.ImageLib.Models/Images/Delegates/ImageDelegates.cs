@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TurningEdge.ImageLib.Models.Images.Abstracts;
 
 namespace TurningEdge.ImageLib.Models.Images.Delegates

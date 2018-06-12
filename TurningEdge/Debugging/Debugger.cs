@@ -52,19 +52,23 @@ namespace TurningEdge.Debugging
         {
             lock (_lock)
             {
-                try
+                while (true)
                 {
-                    string result = string.Empty;
-
-                    result = string.Format("{0}: {1}: {2}", logLevel, DateTime.Now, text);
-                    Console.WriteLine(text);
-                    using (StreamWriter w = File.AppendText(OUTPUT_FILENAME))
+                    try
                     {
-                        w.WriteLine(result);
+                        string result = string.Empty;
+
+                        result = string.Format("{0}: {1}: {2}", logLevel, DateTime.Now, text);
+                        Console.WriteLine(text);
+                        using (StreamWriter w = File.AppendText(OUTPUT_FILENAME))
+                        {
+                            w.WriteLine(result);
+                        }
+                        break;
                     }
+                    catch (Exception)
+                    { }
                 }
-                catch (Exception)
-                { }
             }
         }
     }

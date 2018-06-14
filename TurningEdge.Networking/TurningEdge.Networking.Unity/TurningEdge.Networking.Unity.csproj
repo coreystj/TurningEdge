@@ -187,14 +187,6 @@
       <Project>{93afe9d0-c0e2-41c3-afba-76a91d84ada1}</Project>
       <Name>TurningEdge.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{E6869595-840E-4734-A4DC-9E125DC34DCC}</Project>
-      <Name>TurningEdge</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TurningEdge.Networking\TurningEdge.Networking.csproj">
-      <Project>{59B3DF82-90E5-4F50-B125-BA396BADE926}</Project>
-      <Name>TurningEdge.Networking</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataTypes\NetworkProtocol.cs.meta" />

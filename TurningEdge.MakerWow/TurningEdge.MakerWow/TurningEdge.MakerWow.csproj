@@ -66,7 +66,7 @@
       <Name>TurningEdge.Networking</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
+      <Project>{E6869595-840E-4734-A4DC-9E125DC34DCC}</Project>
       <Name>TurningEdge</Name>
     </ProjectReference>
   </ItemGroup>

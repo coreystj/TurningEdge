@@ -18,6 +18,7 @@ using TurningEdge.Web.WebContext.Interfaces;
 using TurningEdge.Web.WebResult.Interfaces;
 using TurningEdge.MakerWow.Models.GameInstances;
 using TurningEdge.Networking.Models.Concretes;
+using TurningEdge.MakerWow.Api.Models.Abstracts;
 
 namespace TurningEdge.MakerWow.Api.Managers
 {
@@ -26,7 +27,7 @@ namespace TurningEdge.MakerWow.Api.Managers
         public static event OnErrorAction OnError = delegate { };
 
         private static User _user;
-        private const string _baseUrl = "http://localhost:8080/api.php?action=";
+        private const string _baseUrl = "http://localhost:8080/api.php?";
         private static IWebContext _webContext;
 
         private static ChunkDataRepository _chunkDataRepository;
@@ -34,6 +35,8 @@ namespace TurningEdge.MakerWow.Api.Managers
         private static InventoryRepository _inventoryRepository;
         private static StockpileRepository _stockpileRepository;
         private static RelationshipSkillUserRepository _relationshipSkillUserRepository;
+
+        private static string _sessionId;
 
         public static ChunkDataRepository ChunkDataRepository
         {
@@ -154,6 +157,7 @@ namespace TurningEdge.MakerWow.Api.Managers
                 else
                 {
                     var user = apiResult.CurrentUser;
+                    _sessionId = apiResult.SessionId;
                     _user = user;
                     onLoginSuccess(sessionCommand, _user, apiResult);
                 }
@@ -161,6 +165,12 @@ namespace TurningEdge.MakerWow.Api.Managers
             (WebContextException error) => {
                 OnError(new ApiException(1, "Could not login.", error));
             });
+        }
+
+        public static void Login(string username, string password,
+            OnLoginSuccessAction onLoginSuccess, OnLoginFailedAction onLoginFailed)
+        {
+            Login(null, username, password, onLoginSuccess, onLoginFailed);
         }
 
         public static void Logout(SessionCommand sessionCommand, 
@@ -199,7 +209,8 @@ namespace TurningEdge.MakerWow.Api.Managers
             };
 
             _webContext.Get(
-                _baseUrl + url,
+                _baseUrl + ((!string.IsNullOrEmpty(_sessionId))?"session_id="
+                + _sessionId + "&" : string.Empty) + "action=" + url,
                 onSuccessAction,
                 onFailedAction);
         }
@@ -222,9 +233,11 @@ namespace TurningEdge.MakerWow.Api.Managers
 
             _webContext.Post(
                 formData,
-                _baseUrl + url,
+                _baseUrl + ((!string.IsNullOrEmpty(_sessionId)) ? "session_id=" 
+                + _sessionId + "&" : string.Empty) + "action=" + url,
                 onSuccessAction,
                 onFailedAction);
         }
+
     }
 }

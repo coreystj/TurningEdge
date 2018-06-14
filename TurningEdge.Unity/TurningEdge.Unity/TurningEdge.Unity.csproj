@@ -176,12 +176,6 @@
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
-      <Project>{e6869595-840e-4734-a4dc-9e125dc34dcc}</Project>
-      <Name>TurningEdge</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Users\Corey\Desktop\Documents\VS_Projects\DllCloner\DllCloner\bin\Debug\DllCloner.exe"</PostBuildEvent>

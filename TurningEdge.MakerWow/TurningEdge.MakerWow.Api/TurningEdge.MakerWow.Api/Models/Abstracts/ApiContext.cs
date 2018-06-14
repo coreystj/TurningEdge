@@ -39,6 +39,14 @@ namespace TurningEdge.MakerWow.Api.Models.Abstracts
             }
         }
 
+        public string SessionId
+        {
+            get
+            {
+                return (string)_json.Json["session_id"];
+            }
+        }
+
         public DateTime Datetime
         {
             get

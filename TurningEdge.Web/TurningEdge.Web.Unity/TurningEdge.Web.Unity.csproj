@@ -173,11 +173,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\Static\MonoWebContextFactory.cs" />
-    <Compile Include="MonoBehaviours\UnityWebContext.cs" />
+    <Compile Include="Helpers\DictionaryHelper.cs" />
+    <Compile Include="Models\RequestContainer.cs" />
+    <Compile Include="Models\UnityWebContext.cs" />
+    <Compile Include="MonoBehaviours\MonoUnityWebContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebResult\Concretes\UnityWebRequest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TurningEdge\TurningEdge.csproj">
+      <Project>{E6869595-840E-4734-A4DC-9E125DC34DCC}</Project>
+      <Name>TurningEdge</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TurningEdge.Web\TurningEdge.Web.csproj">
       <Project>{99ff16f8-6f2e-4145-92ac-849cea177e15}</Project>
       <Name>TurningEdge.Web</Name>

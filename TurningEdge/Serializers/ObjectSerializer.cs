@@ -25,13 +25,20 @@ namespace TurningEdge.Serializing
         {
             if (bytes == null || bytes.Length == 0)
                 throw new SerializerException("Cannot convert bytes to object due to a null or empty byte array.");
-
+            T obj;
             MemoryStream memStream = new MemoryStream();
             BinaryFormatter binForm = new BinaryFormatter();
             memStream.Write(bytes, 0, bytes.Length);
             memStream.Seek(0, SeekOrigin.Begin);
-            T obj = (T)binForm.Deserialize(memStream);
-
+            try
+            {
+                obj = (T)binForm.Deserialize(memStream);
+            }
+            catch(Exception e)
+            {
+                Debugging.Debugger.PrintError(e);
+                obj = default(T);
+            }
             return obj;
         }
     }

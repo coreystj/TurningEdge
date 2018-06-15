@@ -16,8 +16,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         protected int _y;
         protected int _layerId;
 
-        protected Landscape _landscapeBuffer;
-        protected Construction _constructionBuffer;
+        protected byte[] _heights;
+        protected short[] _materials;
+        protected short[] _constructions;
+        protected byte[] _rotations;
+        protected byte[] _states;
 
         public int Id
         {
@@ -57,24 +60,76 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             }
         }
 
-        public Landscape LandscapeBuffer
+
+        public byte[] Heights
         {
             get
             {
-                return _landscapeBuffer;
+                return _heights;
+            }
+            set
+            {
+                _heights = value;
             }
         }
-        public Construction ConstructionBuffer
+        public short[] Materials
         {
             get
             {
-                return _constructionBuffer;
+                return _materials;
+            }
+            set
+            {
+                _materials = value;
+            }
+        }
+        public short[] Constructions
+        {
+            get
+            {
+                return _constructions;
+            }
+            set
+            {
+                _constructions = value;
+            }
+        }
+        public byte[] Rotations
+        {
+            get
+            {
+                return _rotations;
+            }
+            set
+            {
+                _rotations = value;
+            }
+        }
+        public byte[] States
+        {
+            get
+            {
+                return _states;
+            }
+            set
+            {
+                _states = value;
             }
         }
 
         public ChunkData()
         {
+            _id = -1;
+            _userId = -1;
+            _x = 0;
+            _y = 0;
+            _layerId = -1;
 
+            _heights = new byte[15*15];
+            _materials = new short[15 * 15];
+            _constructions = new short[15 * 15];
+            _rotations = new byte[15 * 15];
+            _states = new byte[15 * 15];
         }
 
         public ChunkData(
@@ -83,8 +138,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             int x,
             int y,
             int layerId,
-            Landscape landscape,
-            Construction construction
+            byte[] heights,
+            short[] materials,
+            short[] constructions,
+            byte[] rotations,
+            byte[] states
             )
             : base()
         {
@@ -94,8 +152,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             _y = y;
             _layerId = layerId;
 
-            _landscapeBuffer = landscape;
-            _constructionBuffer = construction;
+            _heights = heights;
+            _materials = materials;
+            _constructions = constructions;
+            _rotations = rotations;
+            _states = states;
         }
 
         public ChunkData(     
@@ -112,12 +173,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             _y = y;
             _layerId = layerId;
 
-            _landscapeBuffer.Color = new byte[256];
-            _landscapeBuffer.Ground = new byte[256];
-            _landscapeBuffer.Height = new byte[256];
-
-            _constructionBuffer.ConstructionId = new byte[256];
-            _constructionBuffer.RotationIndex = new byte[256];
+            _heights = new byte[15 * 15];
+            _materials = new short[15 * 15];
+            _constructions = new short[15 * 15];
+            _rotations = new byte[15 * 15];
+            _states = new byte[15 * 15];
         }
         
         // override object.Equals
@@ -147,8 +207,11 @@ namespace TurningEdge.MakerWow.Models.GameInstances
                 _x,
                 _y,
                 _layerId,
-                _landscapeBuffer,
-                _constructionBuffer);
+                _heights,
+                _materials,
+                _constructions,
+                _rotations,
+                _states);
         }
     }
 }

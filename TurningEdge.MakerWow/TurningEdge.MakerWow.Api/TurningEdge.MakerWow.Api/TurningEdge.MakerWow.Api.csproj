@@ -42,6 +42,7 @@
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Factories\ChunkDataFactory.cs" />
     <Compile Include="Helpers\ApiExceptionHelper.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\RecordHelper.cs" />
     <Compile Include="Interfaces\IApiRepository.cs" />
     <Compile Include="Managers\MakerWOWApi.cs" />

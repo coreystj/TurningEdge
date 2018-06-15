@@ -7,6 +7,7 @@ using TurningEdge.MakerWow.Api.Models.Interfaces;
 using TurningEdge.MakerWow.Models.GameInstances;
 using TurningEdge.Serializers;
 using TurningEdge.Serializing;
+using TurningEdge.MakerWow.Api.Helpers;
 
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
@@ -30,8 +31,11 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             _layerId = int.Parse((string)record["world_layer_id"]);
             _x = int.Parse((string)record["x_coordinate"]);
             _y = int.Parse((string)record["y_coordinate"]);
-            _landscapeBuffer = ((string)record["landscape"]).Decode().ToObject<Landscape>();
-            _constructionBuffer = ((string)record["objects"]).Decode().ToObject<Construction>();
+            _heights = ((string)record["heights"]).FromFormat<byte>();
+            _materials = ((string)record["materials"]).FromFormat<short>();
+            _constructions = ((string)record["constructions"]).FromFormat<short>();
+            _rotations = ((string)record["rotations"]).FromFormat<byte>();
+            _states = ((string)record["states"]).FromFormat<byte>();
         }
 
         public string SerializeJson()
@@ -45,8 +49,11 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             record.Append("\"" + "world_layer_id" + "\"" + " : " + "\"" + _layerId + "\"" + ",");
             record.Append("\"" + "x_coordinate" + "\"" + " : " + "\"" + _x + "\"" + ",");
             record.Append("\"" + "y_coordinate" + "\"" + " : " + "\"" + _y + "\"" + ",");
-            record.Append("\"" + "landscape" + "\"" + " : " + "\"" + _landscapeBuffer.ToBytes().Encode() + "\"" + ",");
-            record.Append("\"" + "objects" + "\"" + " : " + "\"" + _constructionBuffer.ToBytes().Encode() + "\"");
+            record.Append("\"" + "heights" + "\"" + " : " + "\"" + _heights.ToFormat() + "\"" + ",");
+            record.Append("\"" + "materials" + "\"" + " : " + "\"" + _materials.ToFormat() + "\"" + ",");
+            record.Append("\"" + "constructions" + "\"" + " : " + "\"" + _constructions.ToFormat() + "\"" + ",");
+            record.Append("\"" + "rotations" + "\"" + " : " + "\"" + _rotations.ToFormat() + "\"" + ",");
+            record.Append("\"" + "states" + "\"" + " : " + "\"" + _states.ToFormat() + "\"");
 
             record.Append("}");
 

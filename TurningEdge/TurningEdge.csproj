@@ -56,6 +56,7 @@
     <Compile Include="Generics\Interfaces\IFactory.cs" />
     <Compile Include="Generics\Interfaces\IRepository.cs" />
     <Compile Include="Generics\Interfaces\IView.cs" />
+    <Compile Include="Helpers\ActionHelper.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\HashSetHelper.cs" />

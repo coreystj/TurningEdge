@@ -19,6 +19,7 @@ using TurningEdge.Web.WebResult.Interfaces;
 using TurningEdge.MakerWow.Models.GameInstances;
 using TurningEdge.Networking.Models.Concretes;
 using TurningEdge.MakerWow.Api.Models.Abstracts;
+using TurningEdge.Serializers;
 
 namespace TurningEdge.MakerWow.Api.Managers
 {
@@ -27,7 +28,8 @@ namespace TurningEdge.MakerWow.Api.Managers
         public static event OnErrorAction OnError = delegate { };
 
         private static User _user;
-        private const string _baseUrl = "http://localhost:8080/api.php?";
+        public const string DOMAIN_NAME = "http://localhost:8080/";
+        private const string _baseUrl = DOMAIN_NAME + "api.php?";
         private static IWebContext _webContext;
 
         private static ChunkDataRepository _chunkDataRepository;
@@ -35,6 +37,7 @@ namespace TurningEdge.MakerWow.Api.Managers
         private static InventoryRepository _inventoryRepository;
         private static StockpileRepository _stockpileRepository;
         private static RelationshipSkillUserRepository _relationshipSkillUserRepository;
+        private static GroundRepository _groundRepository;
 
         private static string _sessionId;
 
@@ -57,6 +60,10 @@ namespace TurningEdge.MakerWow.Api.Managers
         public static RelationshipSkillUserRepository RelationshipSkillUserRepository
         {
             get { return _relationshipSkillUserRepository; }
+        }
+        public static GroundRepository GroundRepository
+        {
+            get { return _groundRepository; }
         }
 
         public static RegistrationStatus Status
@@ -122,6 +129,7 @@ namespace TurningEdge.MakerWow.Api.Managers
             _inventoryRepository = new InventoryRepository();
             _stockpileRepository = new StockpileRepository();
             _relationshipSkillUserRepository = new RelationshipSkillUserRepository();
+            _groundRepository = new GroundRepository();
         }
 
         public static void Initialize<T>()
@@ -140,6 +148,17 @@ namespace TurningEdge.MakerWow.Api.Managers
         public static void SetWebContext(IWebContext webContext)
         {
             _webContext = webContext;
+        }
+
+        public static void GetImage(string url, OnImageSuccessAction onSuccess, OnFailedAction onFailed)
+        {
+            DoReadImage(url,
+            (IWebRequest result) => {
+                onSuccess(url, result.RawData.Decode());
+            },
+            (WebContextException error) => {
+                OnError(new ApiException(1, "Could not retrieve data from: " + url, error));
+            });
         }
 
         public static void Login(SessionCommand sessionCommand, string username, string password, 
@@ -211,6 +230,26 @@ namespace TurningEdge.MakerWow.Api.Managers
             _webContext.Get(
                 _baseUrl + ((!string.IsNullOrEmpty(_sessionId))?"session_id="
                 + _sessionId + "&" : string.Empty) + "action=" + url,
+                onSuccessAction,
+                onFailedAction);
+        }
+
+        public static void DoReadImage(string url,
+            OnWebRequestSuccessAction successAction,
+            OnWebRequestFailedAction failedAction)
+        {
+            OnWebRequestSuccessAction onSuccessAction = (IWebRequest result) =>
+            {
+                successAction(result);
+            };
+
+            OnWebRequestFailedAction onFailedAction = (WebContextException error) =>
+            {
+                failedAction(error);
+            };
+
+            _webContext.GetImage(
+                DOMAIN_NAME + url,
                 onSuccessAction,
                 onFailedAction);
         }

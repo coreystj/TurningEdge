@@ -18,9 +18,10 @@ namespace TurningEdge.MakerWow.Api.Delegates
     public delegate void OnLogoutSuccessAction(SessionCommand sessionCommand, ApiContext context);
     public delegate void OnLogoutFailedAction(SessionCommand sessionCommand, ApiContext context);
 
-    public delegate void OnGetSuccessAction<T>(T[] worldLayers, ApiResult<T> context) where T : class, IJsonObject;
+    public delegate void OnGetSuccessAction<T>(T[] records, ApiResult<T> context) where T : class, IJsonObject;
 
     public delegate void OnSuccessAction(ApiAction context);
+    public delegate void OnImageSuccessAction(string url, byte[] bytes);
     public delegate void OnFailedAction(ApiContext context);
 
     public delegate void OnErrorAction(ApiException exception);

@@ -9,14 +9,14 @@ using TurningEdge.MakerWow.Models.GameInstances;
 namespace TurningEdge.MakerWow.Api.Models.GameInstances
 {
     [Serializable]
-    public class ItemJsonObject : Item, IJsonObject
+    public class GroundJsonObject : Ground, IJsonObject
     {
-        public ItemJsonObject(int id, string name, string description, string icon, string model) 
-            : base(id, name, description, icon, model)
+        public GroundJsonObject(int id, string name, string description, string icon)
+            : base(id, name, description, icon)
         {
         }
 
-        public ItemJsonObject(object record) 
+        public GroundJsonObject(object record)
         {
             ParseJson(record as Dictionary<string, object>);
         }
@@ -27,7 +27,6 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             _name = (string)record["name"];
             _description = (string)record["description"];
             _icon = (string)record["icon"];
-            _model = (string)record["model"];
         }
 
         public string SerializeJson()
@@ -37,14 +36,13 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
 
             record.Append("\"" + "id" + "\"" + " : " + "\"" + _id + "\"" + ",");
             record.Append("\"" + "name" + "\"" + " : " + "\"" + _name + "\"" + ",");
-            record.Append("\"" + "description" + "\"" + " : " + "\"" + _description + "\"");
-            record.Append("\"" + "icon" + "\"" + " : " + "\"" + _icon+ "\"" + "\"");
-            record.Append("\"" + "model" + "\"" + " : " + "\"" + _model + "\"");
+            record.Append("\"" + "description" + "\"" + " : " + "\"" + _description + "\"" + ",");
+            record.Append("\"" + "icon" + "\"" + " : " + "\"" + _icon + "\"");
 
             record.Append("}");
 
             return record.ToString();
         }
-        
+
     }
 }

@@ -36,6 +36,11 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             _constructions = ((string)record["constructions"]).FromFormat<short>();
             _rotations = ((string)record["rotations"]).FromFormat<byte>();
             _states = ((string)record["states"]).FromFormat<byte>();
+
+            string rawString = ((string)record["colors"]);
+            byte[] colorResult = rawString.FromFormat<byte>();
+
+            _colors = colorResult;
         }
 
         public string SerializeJson()
@@ -53,7 +58,8 @@ namespace TurningEdge.MakerWow.Api.Models.GameInstances
             record.Append("\"" + "materials" + "\"" + " : " + "\"" + _materials.ToFormat() + "\"" + ",");
             record.Append("\"" + "constructions" + "\"" + " : " + "\"" + _constructions.ToFormat() + "\"" + ",");
             record.Append("\"" + "rotations" + "\"" + " : " + "\"" + _rotations.ToFormat() + "\"" + ",");
-            record.Append("\"" + "states" + "\"" + " : " + "\"" + _states.ToFormat() + "\"");
+            record.Append("\"" + "states" + "\"" + " : " + "\"" + _states.ToFormat() + "\"" + ",");
+            record.Append("\"" + "colors" + "\"" + " : " + "\"" + _colors.ToFormat() + "\"");
 
             record.Append("}");
 

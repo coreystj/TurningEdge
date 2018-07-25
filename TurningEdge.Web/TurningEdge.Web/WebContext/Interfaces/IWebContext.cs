@@ -7,6 +7,7 @@ namespace TurningEdge.Web.WebContext.Interfaces
 {
     public interface IWebContext
     {
+        void GetImage(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null);
         void Get(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null);
         void Post(Dictionary<string, string> formData,
             string url,

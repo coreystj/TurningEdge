@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\IEnginable.cs" />
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\GameInstances\ChunkData.cs" />
+    <Compile Include="Models\GameInstances\Ground.cs" />
     <Compile Include="Models\GameInstances\Inventory.cs" />
     <Compile Include="Models\GameInstances\Item.cs" />
     <Compile Include="Models\GameInstances\Skill.cs" />

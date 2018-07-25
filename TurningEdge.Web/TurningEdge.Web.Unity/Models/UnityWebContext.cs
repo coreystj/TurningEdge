@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TurningEdge.Generics.Factories;
+using TurningEdge.Serializers;
 using TurningEdge.Web.Exceptions;
 using TurningEdge.Web.Unity.Factories.Static;
 using TurningEdge.Web.Unity.Helpers;
@@ -33,19 +34,48 @@ namespace TurningEdge.Web.Unity.Models
             OnWebRequestFailedAction failedAction = null)
         {
             WWWForm form = formData.ToWWWForm();
-            //_url = url;
-            _requests[url] = new RequestContainer(successAction, failedAction, form);
-            MonoUnityWebContext.Context.StartCoroutine(PostText(url));
+            var container = new RequestContainer(successAction, failedAction, form);
+            MonoUnityWebContext.Context.StartCoroutine(PostText(url, container));
         }
 
+        IEnumerator GetImageText(string url, RequestContainer details)
+        {
+            //string url = string.Empty;
+            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+            {
+                yield return www.SendWebRequest();
+                //RequestContainer details = _requests[www.url];
+                if (www.isNetworkError || www.isHttpError)
+                {
+                    //OnWebRequestFailed(new WebContextException(www.error));
+                    details.OnFailed(new WebContextException(www.error));
+                }
+                else
+                {
+                    // Show results as text
+                    string rawData = www.downloadHandler.text;
+                    var webRequestFactory = new Factory<IWebRequest>();
 
-        IEnumerator GetText(string url)
+                    Texture2D tex = DownloadHandlerTexture.GetContent(www);
+                    byte[] bytes = tex.GetRawTextureData();
+                    string base64Encoded = bytes.Encode();
+
+                    var webRequest = webRequestFactory.Create<
+                        WebResult.Concretes.UnityWebRequest>(base64Encoded, www.url);
+
+
+                    details.OnSuccess(webRequest);
+                }
+            }
+        }
+
+        IEnumerator GetText(string url, RequestContainer details)
         {
             //string url = string.Empty;
             using (UnityWebRequest www = UnityWebRequest.Get(url))
             {
                 yield return www.SendWebRequest();
-                RequestContainer details = _requests[www.url];
+                //RequestContainer details = _requests[url];
                 if (www.isNetworkError || www.isHttpError)
                 {
                     //OnWebRequestFailed(new WebContextException(www.error));
@@ -64,10 +94,10 @@ namespace TurningEdge.Web.Unity.Models
             }
         }
 
-        IEnumerator PostText(string url)
+        IEnumerator PostText(string url, RequestContainer details)
         {
             //string url = string.Empty;
-            RequestContainer details = _requests[url];
+            //RequestContainer details = _requests[url];
 
             using (UnityWebRequest www = UnityWebRequest.Post(url, details.Form))
             {
@@ -97,10 +127,14 @@ namespace TurningEdge.Web.Unity.Models
         public void Get(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null)
         {
             //_url = url;
-            _requests[url] = new RequestContainer(successAction, failedAction);
-            MonoUnityWebContext.Context.StartCoroutine(GetText(url));
+            var container = new RequestContainer(successAction, failedAction);
+            MonoUnityWebContext.Context.StartCoroutine(GetText(url, container));
         }
 
-
+        public void GetImage(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null)
+        {
+            var container = new RequestContainer(successAction, failedAction);
+            MonoUnityWebContext.Context.StartCoroutine(GetImageText(url, container));
+        }
     }
 }

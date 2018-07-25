@@ -31,6 +31,11 @@ namespace TurningEdge.Web.Windows.WebContext.Concretes
             SendGetRequest(url, successAction, failedAction);
         }
 
+        public void GetImage(string url, OnWebRequestSuccessAction successAction, OnWebRequestFailedAction failedAction = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Post(Dictionary<string, string> formData, 
             string url,
             OnWebRequestSuccessAction successAction,

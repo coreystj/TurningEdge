@@ -21,6 +21,7 @@ namespace TurningEdge.MakerWow.Models.GameInstances
         protected short[] _constructions;
         protected byte[] _rotations;
         protected byte[] _states;
+        protected byte[] _colors;
 
         public int Id
         {
@@ -116,6 +117,17 @@ namespace TurningEdge.MakerWow.Models.GameInstances
                 _states = value;
             }
         }
+        public byte[] Colors
+        {
+            get
+            {
+                return _colors;
+            }
+            set
+            {
+                _colors = value;
+            }
+        }
 
         public ChunkData()
         {
@@ -125,11 +137,12 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             _y = 0;
             _layerId = -1;
 
-            _heights = new byte[15*15];
+            _heights = new byte[16 * 16];
             _materials = new short[15 * 15];
             _constructions = new short[15 * 15];
             _rotations = new byte[15 * 15];
             _states = new byte[15 * 15];
+            _colors = new byte[16 * 16];
         }
 
         public ChunkData(
@@ -142,7 +155,8 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             short[] materials,
             short[] constructions,
             byte[] rotations,
-            byte[] states
+            byte[] states,
+            byte[] colors
             )
             : base()
         {
@@ -157,6 +171,7 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             _constructions = constructions;
             _rotations = rotations;
             _states = states;
+            _colors = colors;
         }
 
         public ChunkData(     
@@ -173,11 +188,12 @@ namespace TurningEdge.MakerWow.Models.GameInstances
             _y = y;
             _layerId = layerId;
 
-            _heights = new byte[15 * 15];
+            _heights = new byte[16 * 16];
             _materials = new short[15 * 15];
             _constructions = new short[15 * 15];
             _rotations = new byte[15 * 15];
             _states = new byte[15 * 15];
+            _colors = new byte[16 * 16];
         }
         
         // override object.Equals
@@ -211,7 +227,8 @@ namespace TurningEdge.MakerWow.Models.GameInstances
                 _materials,
                 _constructions,
                 _rotations,
-                _states);
+                _states,
+                _colors);
         }
     }
 }

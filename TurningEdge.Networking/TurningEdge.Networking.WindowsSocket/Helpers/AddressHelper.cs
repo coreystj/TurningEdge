@@ -56,7 +56,7 @@ namespace TurningEdge.Networking.Helpers
 
         public static bool CheckIfSamePublic(string hostname)
         {
-            return AddressHelper.Parse("turningedge.ddns.net").ToString() 
+            return AddressHelper.Parse("127.0.0.1").ToString() 
                 == AddressHelper.GetPublicAddress();
         }
     }
